@@ -117,7 +117,7 @@ const Tabbar = TabNavigator({
 		style: {
 			height: 50,
 			backgroundColor:color.themeWhite,
-			borderTopWidth:0.5,
+			borderTopWidth:1,
 			borderTopColor:color.themeLine,
 		},
 		activeTintColor: color.themeRed, // label和icon的前景色 活跃状态下（选中）。

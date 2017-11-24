@@ -3,8 +3,8 @@
  */
 
 import React from 'react';
-import {Text,StyleSheet, ScrollView,View} from 'react-native';
-import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
+import {Text, StyleSheet, ScrollView, View} from 'react-native';
+import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
 import HomeTabBar from '../../components/HomeTabBar';
 import * as color from '../../utils/theme';
 class Home extends React.Component {
@@ -12,11 +12,17 @@ class Home extends React.Component {
 	static navigationOptions = {
 		title: "趣购",
 	}
+
 	constructor(props) {
 		super(props);
+		this.state = {};
 	}
 
 	render() {
+		let cateContent1 =
+			<View style={styles.cateContent1}>
+				<Text>News</Text>
+			</View>
 		return (
 			<ScrollableTabView
 				tabBarUnderlineStyle={{backgroundColor:color.themeWhite,height:2}}
@@ -28,9 +34,7 @@ class Home extends React.Component {
 				renderTabBar={() => <ScrollableTabBar style={{height: 40}} tabStyle={{height: 36}}/>}
 			>
 				<ScrollView tabLabel="精选" style={styles.tabView}>
-					<View style={styles.card}>
-						<Text>News</Text>
-					</View>
+					{cateContent1}
 				</ScrollView>
 				<ScrollView tabLabel="实用类" style={styles.tabView}>
 					<View style={styles.card}>
@@ -61,7 +65,10 @@ const styles = StyleSheet.create({
 	tabView: {
 		flex: 1,
 		padding: 10,
-		backgroundColor: color.themeWhite,
+		// backgroundColor: color.themeWhite,
+	},
+	cateContent1:{
+
 	},
 	card: {
 		borderWidth: 1,
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
 		height: 150,
 		padding: 15,
 		shadowColor: '#ccc',
-		shadowOffset: { width: 2, height: 2, },
+		shadowOffset: {width: 2, height: 2,},
 		shadowOpacity: 0.5,
 		shadowRadius: 3,
 	},
