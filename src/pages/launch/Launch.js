@@ -48,7 +48,7 @@ class Launch extends Component {
             });
             this.props.navigation.dispatch(reset);
             // navigate('Tabbar');
-        }, 2000);
+        }, 2);
     }
 
     componentWillUnmount() {

@@ -20,92 +20,121 @@
 import React, {Component} from 'react';
 import {TabNavigator} from 'react-navigation';
 import {
-    Image,
+	Image,
 
 } from 'react-native';
 
-import Home from '../pages/home/Home';
-import Community from '../pages/community/Community';
+import HomeBack from '../pages/homeback/Home';
 import My from '../pages/my/My';
 
+
+import Home from '../pages/home/Home';
+import Recommend from '../pages/home/Recommend';
+import Top from '../pages/home/Top';
+import Me from '../pages/home/Me';
+
 import * as font from '../constants/WHCFont';
+import * as color from '../utils/theme';
 
 const Tabbar = TabNavigator({
-    Home: {
-        screen: Home,
-        navigationOptions: {
-            tabBarLabel: '首页',
-            tabBarIcon: ({tintColor}) => {
-                return(
-                <Image
-                    source = {require('../images/home_normal_icon.png')}
-                    style = {{
-                        width: 20,
-                        height: 20,
+	Home: {
+		screen: Home,
+		navigationOptions: {
+			tabBarLabel: '首页',
+			tabBarIcon: ({tintColor}) => {
+				return (
+					<Image
+						source={require('../../res/img/home/home.png')}
+						style={{
+                        width: 24,
+                        height: 24,
                         tintColor: tintColor,
                     }}></Image>
-            )},
-        },
-    },
-    Community: {
-        screen: Community,
-        navigationOptions: {
-            tabBarLabel: '社区',
-            tabBarIcon: ({tintColor}) => {
-                return (
-                <Image
-                    source = {require('../images/community_normal_icon.png')}
-                    style = {{
-                        width: 20,
-                        height: 20,
+				)
+			},
+		},
+	},
+	Recommend: {
+		screen: Recommend,
+		navigationOptions: {
+			tabBarLabel: '每周推荐',
+			tabBarIcon: ({tintColor}) => {
+				return (
+					<Image
+						source={require('../../res/img/home/recommend.png')}
+						style={{
+                        width: 24,
+                        height: 24,
                         tintColor: tintColor,
                     }}></Image>
-            )},
-        },
-    },
-    My: {
-        screen: My,
-        navigationOptions: {
-            tabBarLabel: '我的',
-            tabBarIcon: ({tintColor}) => {
-                return (
-                <Image
-                    source = {require('../images/my_normal_icon.png')}
-                    style = {{
-                        width: 25,
-                        height: 25,
+				)
+			},
+		},
+	},
+	Top: {
+		screen: Top,
+		navigationOptions: {
+			tabBarLabel: '榜单',
+			tabBarIcon: ({tintColor}) => {
+				return (
+					<Image
+						source={require('../../res/img/home/top.png')}
+						style={{
+                        width: 24,
+                        height: 24,
                         tintColor: tintColor,
                     }}></Image>
-            )},
-        },
-    }}, {
-	initialRouteName:'Home',
-    tabBarPosition: 'bottom',
-    swipeEnabled: false,
-    animationEnabled: false,
-	lazy:false,
-	backBehavior:'none',
-    tabBarOptions: {
-    	// ios or android
-        style: {
-            height: 49,
-        },
-        activeTintColor: font.themeColor,
+				)
+			},
+		},
+	},
+	Me: {
+		screen: My,
+		navigationOptions: {
+			tabBarLabel: '我的',
+			tabBarIcon: ({tintColor}) => {
+				return (
+					<Image
+						source={require('../../res/img/home/me.png')}
+						style={{
+                        width: 24,
+                        height: 24,
+                        tintColor: tintColor,
+                    }}></Image>
+				)
+			},
+		},
+	}
+}, {
+	initialRouteName: 'Home',
+	tabBarPosition: 'bottom',
+	swipeEnabled: false,
+	animationEnabled: false,
+	lazy: false,
+	backBehavior: 'none', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
+	tabBarOptions: {
+		// ios or android
+		style: {
+			height: 50,
+			backgroundColor:color.themeWhite,
+			borderTopWidth:0.5,
+			borderTopColor:color.themeLine,
+		},
+		activeTintColor: color.themeRed, // label和icon的前景色 活跃状态下（选中）。
+		inactiveTintColor: color.themeGray, // label和icon的前景色 不活跃状态下(未选中)。
+		labelStyle:{margin: 0,fontSize:12},
 
-	    // ios
-        inactiveTintColor:font.themeBlack,
-        inactiveBackgroundColor:'white',
-        activeBackgroundColor: '#fff',
+		// ios
+		inactiveBackgroundColor: color.themeWhite,
+		activeBackgroundColor: color.themeWhite,
 
-	    // android
-	    showIcon:true,
-	    iconStyle:{
-            margin:0,
-	    },
-	    indicatorStyle:{height:0},
-    },
+		// android
+		showIcon: true,
+		pressColor:color.themeRed,
+		iconStyle: {margin: 0,},  // 比iOS多了一个属性
+		indicatorStyle: {height: 0}, // 标签指示器的样式对象（选项卡底部的行）。安卓底部会多出一条线，可以将height设置为0来暂时解决这个问题。
+	},
 });
-
 
 
 export default Tabbar;
