@@ -6,7 +6,9 @@ import React from 'react';
 import {Text,StyleSheet, ScrollView} from 'react-native';
 
 class Top extends React.Component {
-
+	static navigationOptions = {
+		title: "榜单",
+	}
 	constructor(props) {
 		super(props);
 	}

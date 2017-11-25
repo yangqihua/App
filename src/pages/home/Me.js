@@ -7,6 +7,9 @@ import {Text,StyleSheet, ScrollView} from 'react-native';
 
 class Me extends React.Component {
 
+	static navigationOptions = {
+		title: "我的",
+	}
 	constructor(props) {
 		super(props);
 	}

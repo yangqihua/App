@@ -6,7 +6,9 @@ import React from 'react';
 import {Text,StyleSheet, ScrollView} from 'react-native';
 
 class Recommend extends React.Component {
-
+	static navigationOptions = {
+		title: "每周推荐",
+	}
 	constructor(props) {
 		super(props);
 	}
