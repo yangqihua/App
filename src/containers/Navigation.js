@@ -8,7 +8,7 @@ import Blank from '../pages/blank/Blank';
 import Webv from '../pages/webview/Webv';
 
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
-import * as color from '../utils/theme';
+import * as color from '../utils/Theme';
 const headerStyle = {
 	// height:48,
 	backgroundColor: color.themeRed,

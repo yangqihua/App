@@ -1,33 +1,26 @@
-/**
- * Copyright (c) 2017-present, Liu Jinyong
- * All rights reserved.
- *
- * https://github.com/huanxsd/MeiTuan
- * @flow
- */
-
 import React, {PureComponent} from 'react'
 import {
 	View, Text, StyleSheet, TouchableWithoutFeedback, Image, Dimensions,
 	PixelRatio,
 } from 'react-native'
-import * as color from '../../utils/theme';
+import * as color from '../../utils/Theme';
+import {base_public_url} from '../../utils/Constants'
 class Cell extends PureComponent {
 
 	renderItem(item) {
-		console.log("item", item)
+		// console.log("item", item)
 		return (
 			<TouchableWithoutFeedback key={item.key} onPress={this.props.onPress}>
 
 				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
-					<Image source={{uri: item.imageUrl}} style={styles.icon}/>
+					<Image source={{uri: base_public_url+item.home_url.url}} style={styles.icon}/>
 
 					<View style={styles.textView}>
-						<Text style={styles.h1} numberOfLines={1}>{item.title}</Text>
-						<Text style={styles.p} numberOfLines={2}>{item.subtitle}</Text>
+						<Text style={styles.h1} numberOfLines={1}>{item.name}</Text>
+						<Text style={styles.p} numberOfLines={2}>{item.desc}</Text>
 						<View style={styles.bottomContainer}>
 							<Text style={[styles.h1, styles.price]}>¥ {item.price}</Text>
-							<Text style={[styles.p]}>{item.key}</Text>
+							<Text style={[styles.p]}>{item.collection_num}</Text>
 						</View>
 					</View>
 				</View>
@@ -48,7 +41,6 @@ class Cell extends PureComponent {
 	}
 }
 
-const pixelRatio = PixelRatio.get();
 const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
 	container: {
@@ -97,8 +89,6 @@ const styles = StyleSheet.create({
 		marginBottom: 4,
 		fontSize: 14,
 		color: color.themeBlack,
-		textAlign: 'center',
-		justifyContent: 'center', //虽然样式中设置了 justifyContent: 'center'，但无效
 	},
 	price: {
 		color: color.themeRed

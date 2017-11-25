@@ -11,8 +11,9 @@ import testData from './data'
 
 import HomeTabBar from '../../components/HomeTabBar';
 
-import * as color from '../../utils/theme';
+import * as color from '../../utils/Theme';
 import Utils from '../../utils/Utils';
+import HttpUtil from '../../utils/HTTPUtil'
 
 class Home extends React.Component {
 
@@ -22,7 +23,7 @@ class Home extends React.Component {
 
 	constructor(props) {
 		super(props);
-		const category = [{category:1,name:'精选'},{category:2,name:'实用类'},{category:3,name:'黑科技'},{category:4,name:'有意思'},{category:5,name:'萌萌哒'}];
+		const category = [{category:0,name:'精选'},{category:1,name:'实用类'},{category:2,name:'黑科技'},{category:3,name:'有意思'},{category:4,name:'萌萌哒'}];
 		this.state = {category:category,activeCategory:1};
 	}
 
@@ -38,7 +39,7 @@ class Home extends React.Component {
 				renderTabBar={() => <ScrollableTabBar style={{height: 40}} tabStyle={{height: 36}}/>}
 			>
 				{this.state.category.map(cate=>{
-					return <TabContent key={cate.category} category={cate} tabLabel={cate.name}/>
+					return <TabContent key={cate.category} category={cate.category} tabLabel={cate.name}/>
 				})}
 			</ScrollableTabView>
 		);
@@ -64,14 +65,15 @@ export default Home;
 
 class TabContent extends Component{
 	static defaultProps = {
-		category:{category:1,name:'精选'},
+		category:0,
 	}
 
 	constructor(props) {
 		super(props);
+		this.queryParams = {page:1,limit:10};
 		this.state = {
 			data:[],    // 为了便于list渲染，每个小数组包含两条数据，一行有两个商品
-			pull:{page:1,limit:10,refreshState:RefreshState.Idle}
+			refreshState:RefreshState.Idle
 		};
 	}
 
@@ -82,7 +84,7 @@ class TabContent extends Component{
 					data={this.state.data}
 					keyExtractor={this.keyExtractor}
 					renderItem={this.renderCell}
-					refreshState={this.state.pull.refreshState}
+					refreshState={this.state.refreshState}
 					onHeaderRefresh={this.onHeaderRefresh}
 					onFooterRefresh={this.onFooterRefresh}
 				/>
@@ -95,45 +97,46 @@ class TabContent extends Component{
 	}
 
 	onHeaderRefresh = () => {
-		this.setState({pull:{refreshState: RefreshState.HeaderRefreshing}})
-
-		// 模拟网络请求
-		setTimeout(() => {
-			// 模拟网络加载失败的情况
-			if (Math.random() < 0.002) {
-				this.setState({pull:{refreshState: RefreshState.Failure}})
-				return
+		this.setState({refreshState: RefreshState.HeaderRefreshing})
+		this.queryParams.page = 1;
+		let params = {
+			url:'goods/homelist',
+			params:{page:this.queryParams.page,limit:this.queryParams.limit,category:this.props.category},
+			scb:(result)=>{
+				console.log('onHeaderRefresh.result:',result);
+				this.setState({
+					data: Utils.splitArr(result,2),
+					refreshState: RefreshState.Idle,
+				});
+			},
+			ecb:(err)=>{
+				this.setState({refreshState: RefreshState.Failure})
 			}
-
-			//获取测试数据
-			let dataList = this.getTestList(true)
-
-			this.setState({
-				data: dataList,
-				pull:{refreshState: RefreshState.Idle},
-			})
-		}, 1000)
+		}
+		// console.log("params:",params);
+		HttpUtil.get(params)
 	}
 
 	onFooterRefresh = () => {
-		this.setState({pull:{refreshState: RefreshState.FooterRefreshing}})
-
-		// 模拟网络请求
-		setTimeout(() => {
-			// 模拟网络加载失败的情况
-			if (Math.random() < 0.002) {
-				this.setState({pull:{refreshState: RefreshState.Failure}})
-				return
+		this.setState({refreshState: RefreshState.FooterRefreshing})
+		let params = {
+			url:'goods/homelist',
+			params:{page:this.queryParams.page,limit:this.queryParams.limit,category:this.props.category},
+			scb:(result)=>{
+				console.log('onFooterRefresh.result:',result);
+				let refreshStatus = result.length<10?RefreshState.NoMoreData:RefreshState.Idle;
+				let data = [...this.state.data, ...Utils.splitArr(result,2)]
+				this.setState({
+					data: data,
+					refreshState: refreshStatus,
+				})
+				this.queryParams.page++;
+			},
+			ecb:(err)=>{
+				this.setState({refreshState: RefreshState.Failure})
 			}
-
-			//获取测试数据
-			let dataList = this.getTestList(false)
-
-			this.setState({
-				data: dataList,
-				pull:{refreshState: dataList.length > 50 ? RefreshState.NoMoreData : RefreshState.Idle},
-			})
-		}, 1000)
+		}
+		HttpUtil.get(params)
 	}
 
 	// 获取测试数据

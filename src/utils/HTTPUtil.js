@@ -1,7 +1,7 @@
 /**
  * Created by yangqihua on 2017/11/25.
  */
-
+import {base_api_url} from './Constants'
 /**
  * 基于 fetch 封装的 GET请求
  * @param url
@@ -72,12 +72,15 @@ class HTTPUtil {
 		})
 	}
 
-	static get(url,params={},scb,ecb){
-		HTTPUtil.get(url,params,null).then((json) => {
+	static get({url,params={},scb,ecb}){
+		console.log("HTTPUtil.params:",url);
+		url = base_api_url+url;
+		HTTPUtil.promiseGet(url,params,null).then((json) => {
+			console.log("json:",json)
 			//处理 请求success
 			if (json.code === 200) {
 				scb&&scb(json.data)
-			}else{
+			}else{  // 自定义异常
 				ecb&&ecb(json);
 			}
 		},(err)=>{
@@ -85,12 +88,13 @@ class HTTPUtil {
 		})
 	}
 
-	static post(url,params={},scb,ecb){
-		HTTPUtil.get(url,params,null).then((json) => {
+	static post({url,requestData={},scb,ecb}){
+		url = base_api_url+url;
+		HTTPUtil.promisePost(url,requestData,null).then((json) => {
 			//处理 请求success
 			if (json.code === 200) {
 				scb&&scb(json.data)
-			}else{
+			}else{  // 自定义异常
 				ecb&&ecb(json);
 			}
 		},(err)=>{

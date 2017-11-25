@@ -34,7 +34,7 @@ import Top from '../pages/home/Top';
 import Me from '../pages/home/Me';
 
 import * as font from '../constants/WHCFont';
-import * as color from '../utils/theme';
+import * as color from '../utils/Theme';
 
 const Tabbar = TabNavigator({
 	Home: {
