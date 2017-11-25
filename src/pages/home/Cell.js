@@ -8,30 +8,31 @@
 
 import React, {PureComponent} from 'react'
 import {
-	View, Text, StyleSheet, TouchableOpacity, Image, Dimensions,
+	View, Text, StyleSheet, TouchableWithoutFeedback, Image, Dimensions,
 	PixelRatio,
 } from 'react-native'
-
+import * as color from '../../utils/theme';
 class Cell extends PureComponent {
 
 	renderItem(item) {
 		console.log("item", item)
 		return (
-			<TouchableOpacity key={item.key} style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]} onPress={this.props.onPress}>
+			<TouchableWithoutFeedback key={item.key} onPress={this.props.onPress}>
 
-			<Image source={{uri: item.imageUrl}} style={styles.icon}/>
+				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
+					<Image source={{uri: item.imageUrl}} style={styles.icon}/>
 
-			<View style={styles.rightContainer}>
-				<Text style={styles.h1}>{item.title}</Text>
-				<View>
+					<View style={styles.textView}>
+						<Text style={styles.h1} numberOfLines={1}>{item.title}</Text>
+						<Text style={styles.p} numberOfLines={2}>{item.subtitle}</Text>
+						<View style={styles.bottomContainer}>
+							<Text style={[styles.h1, styles.price]}>¥ {item.price}</Text>
+							<Text style={[styles.p]}>{item.key}</Text>
+						</View>
+					</View>
 				</View>
-				<Text style={styles.p} numberOfLines={0}>{item.subtitle}</Text>
-				<View style={{flex: 1, justifyContent: 'flex-end'}}>
-					<Text style={[styles.h1, styles.price]}>{item.price}元</Text>
-				</View>
-			</View>
 
-			</TouchableOpacity>
+			</TouchableWithoutFeedback>
 		);
 	}
 
@@ -45,12 +46,6 @@ class Cell extends PureComponent {
 			</View>
 		)
 	}
-}
-
-const color = {
-	theme: '#06C1AE',
-	border: '#e0e0e0',
-	background: '#f3f3f3'
 }
 
 const pixelRatio = PixelRatio.get();
@@ -73,33 +68,45 @@ const styles = StyleSheet.create({
 	itemContainer: {
 		width: windowWidth / 2 - 15,
 		borderWidth: 1,
-		borderColor: color.border,
+		borderColor: color.themeBorder,
 		borderRadius: 5,
 	},
 	icon: {
 		width: windowWidth / 2 - 17,
 		height: windowWidth / 2 - 17,
 		resizeMode: 'cover',
-		borderTopRightRadius:5,
-		borderTopLeftRadius:5,
-		borderColor:color.border,
+		borderTopRightRadius: 5,
+		borderTopLeftRadius: 5,
+		borderColor: color.themeBorder,
 	},
-	rightContainer: {
+	bottomContainer: {
 		flex: 1,
-		paddingLeft: 20,
-		paddingRight: 10,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginRight: 4,
+		marginLeft: 4,
+		marginTop: 5,
 	},
-	price: {
-		color: color.theme
+	textView: {
+		marginTop: 10,
+		marginBottom: 2,
+		marginRight: 2,
+		marginLeft: 2,
 	},
 	h1: {
-		fontSize: 15,
-		fontWeight: 'bold',
-		color: '#222222',
+		marginBottom: 4,
+		fontSize: 14,
+		color: color.themeBlack,
+		textAlign: 'center',
+		justifyContent: 'center', //虽然样式中设置了 justifyContent: 'center'，但无效
 	},
+	price: {
+		color: color.themeRed
+	},
+
 	p: {
-		fontSize: 13,
-		color: '#777777',
+		fontSize: 12,
+		color: color.themeGrayText,
 	},
 });
 
