@@ -20,7 +20,7 @@
 import React, {Component} from 'react';
 import {TabNavigator} from 'react-navigation';
 import {
-	Image,
+	Image,PixelRatio
 
 } from 'react-native';
 
@@ -89,7 +89,7 @@ const Tabbar = TabNavigator({
 		},
 	},
 	Me: {
-		screen: My,
+		screen: Me,
 		navigationOptions: {
 			tabBarLabel: '我的',
 			tabBarIcon: ({tintColor}) => {
