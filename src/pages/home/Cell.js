@@ -3,6 +3,7 @@ import {
 	View, Text, StyleSheet, TouchableWithoutFeedback, Image, Dimensions,
 	PixelRatio,
 } from 'react-native'
+import {CachedImage} from "react-native-img-cache";
 import * as color from '../../utils/Theme';
 import {base_public_url} from '../../utils/Constants'
 class Cell extends PureComponent {
@@ -13,8 +14,7 @@ class Cell extends PureComponent {
 			<TouchableWithoutFeedback key={item.key} onPress={this.props.onPress}>
 
 				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
-					<Image source={{uri: base_public_url+item.home_url.url}} style={styles.icon}
-					/>
+					<CachedImage source={{uri: base_public_url+item.home_url.url}} style={styles.icon}/>
 
 					<View style={styles.textView}>
 						<Text style={styles.h1} numberOfLines={1}>{item.name}</Text>
