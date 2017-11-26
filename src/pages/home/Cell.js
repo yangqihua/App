@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
 		width: windowWidth / 2 - 15,
 		borderWidth: 1,
 		borderColor: color.themeBorder,
-		borderRadius: 5,
+		borderRadius: 3,
 	},
 	icon: {
 		width: windowWidth / 2 - 17,
 		height: windowWidth / 2 - 17,
 		resizeMode: 'cover',
-		borderTopRightRadius: 5,
-		borderTopLeftRadius: 5,
+		borderTopRightRadius: 3,
+		borderTopLeftRadius: 3,
 		borderColor: color.themeBorder,
 	},
 	bottomContainer: {

@@ -30,6 +30,7 @@ class Home extends React.Component {
 	render() {
 		return (
 			<ScrollableTabView
+				style={{backgroundColor:color.themeWhite}}
 				tabBarUnderlineStyle={{backgroundColor:color.themeWhite,height:2}}
 				tabBarInactiveTextColor='mintcream'
 				tabBarActiveTextColor={color.themeWhite}
@@ -107,6 +108,7 @@ class TabContent extends Component{
 					data: Utils.splitArr(result,2),
 					refreshState: RefreshState.Idle,
 				});
+				this.queryParams.page++;
 			},
 			ecb:(err)=>{
 				this.setState({refreshState: RefreshState.Failure})
@@ -136,20 +138,6 @@ class TabContent extends Component{
 		HttpUtil.get(params)
 	}
 
-	// 获取测试数据
-	getTestList(isReload: boolean): Array<Object> {
-		let newList = testData.map((data) => {
-			return {
-				imageUrl: data.squareimgurl,
-				title: data.mname,
-				subtitle: `[${data.range}]${data.title}`,
-				price: data.price,
-			}
-		})
-		let subArr = Utils.splitArr(newList,2);
-		return isReload ? subArr : [...this.state.data, ...subArr]
-	}
-
 	keyExtractor = (item: any, index: number) => {
 		return index
 	}
@@ -157,8 +145,6 @@ class TabContent extends Component{
 	renderCell = (info) => {
 		return <Cell items={info.item} />
 	}
-
-
 }
 
 
