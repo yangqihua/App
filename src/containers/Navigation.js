@@ -59,5 +59,4 @@ const AppNavigation = StackNavigator(
 		}  // 回调
 
 	});
-
 export default AppNavigation;

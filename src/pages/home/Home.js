@@ -103,7 +103,6 @@ class TabContent extends Component{
 			url:'goods/homelist',
 			params:{page:this.queryParams.page,limit:this.queryParams.limit,category:this.props.category},
 			scb:(result)=>{
-				console.log('onHeaderRefresh.result:',result);
 				this.setState({
 					data: Utils.splitArr(result,2),
 					refreshState: RefreshState.Idle,
@@ -113,7 +112,6 @@ class TabContent extends Component{
 				this.setState({refreshState: RefreshState.Failure})
 			}
 		}
-		// console.log("params:",params);
 		HttpUtil.get(params)
 	}
 
@@ -123,7 +121,6 @@ class TabContent extends Component{
 			url:'goods/homelist',
 			params:{page:this.queryParams.page,limit:this.queryParams.limit,category:this.props.category},
 			scb:(result)=>{
-				console.log('onFooterRefresh.result:',result);
 				let refreshStatus = result.length<10?RefreshState.NoMoreData:RefreshState.Idle;
 				let data = [...this.state.data, ...Utils.splitArr(result,2)]
 				this.setState({
@@ -158,7 +155,6 @@ class TabContent extends Component{
 	}
 
 	renderCell = (info) => {
-		// console.log('info',info)
 		return <Cell items={info.item} />
 	}
 

@@ -13,7 +13,8 @@ class Cell extends PureComponent {
 			<TouchableWithoutFeedback key={item.key} onPress={this.props.onPress}>
 
 				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
-					<Image source={{uri: base_public_url+item.home_url.url}} style={styles.icon}/>
+					<Image source={{uri: base_public_url+item.home_url.url}} style={styles.icon}
+					/>
 
 					<View style={styles.textView}>
 						<Text style={styles.h1} numberOfLines={1}>{item.name}</Text>

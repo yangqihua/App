@@ -73,10 +73,8 @@ class HTTPUtil {
 	}
 
 	static get({url,params={},scb,ecb}){
-		console.log("HTTPUtil.params:",url);
 		url = base_api_url+url;
 		HTTPUtil.promiseGet(url,params,null).then((json) => {
-			console.log("json:",json)
 			//处理 请求success
 			if (json.code === 200) {
 				scb&&scb(json.data)
