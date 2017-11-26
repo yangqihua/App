@@ -10,10 +10,10 @@ import Webv from '../pages/webview/Webv';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
 import * as color from '../utils/Theme';
 const headerStyle = {
-	// height:48,
+	height:48,
 	backgroundColor: color.themeRed,
 	elevation: 0,
-	shadowOpacity: 0,
+	borderBottomWidth:0
 };
 
 const AppNavigation = StackNavigator(
