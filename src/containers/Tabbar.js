@@ -122,7 +122,7 @@ const Tabbar = TabNavigator({
 		},
 		activeTintColor: color.themeRed, // label和icon的前景色 活跃状态下（选中）。
 		inactiveTintColor: color.themeGray, // label和icon的前景色 不活跃状态下(未选中)。
-		labelStyle:{margin: 0,fontSize:12},
+		labelStyle:{margin: 0,fontSize:10},
 
 		// ios
 		inactiveBackgroundColor: color.themeWhite,

@@ -9,12 +9,6 @@ import Webv from '../pages/webview/Webv';
 
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
 import * as color from '../utils/Theme';
-const headerStyle = {
-	height:48,
-	backgroundColor: color.themeRed,
-	elevation: 0,
-	borderBottomWidth:0
-};
 
 const AppNavigation = StackNavigator(
 	{
@@ -35,7 +29,12 @@ const AppNavigation = StackNavigator(
 		initialRouteName: 'Launch', // 默认显示界面
 		navigationOptions: {  // 屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)
 			headerBackTitle: '返回',  // 左上角返回键文字
-			headerStyle: headerStyle,
+			headerStyle: {
+				height: 48,
+				backgroundColor: color.themeRed,
+				elevation: 0,
+				borderBottomWidth: 0
+			},
 			headerTitleStyle: {
 				fontSize: 18,
 				color: 'mintcream',
@@ -58,5 +57,6 @@ const AppNavigation = StackNavigator(
 			console.log('导航栏切换结束');
 		}  // 回调
 
-	});
+	}
+);
 export default AppNavigation;
