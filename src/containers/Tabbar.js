@@ -49,7 +49,7 @@ const Tabbar = TabNavigator({
                         width: 24,
                         height: 24,
                         tintColor: tintColor,
-                    }}></Image>
+                    }}/>
 				)
 			},
 		},
@@ -66,7 +66,7 @@ const Tabbar = TabNavigator({
                         width: 24,
                         height: 24,
                         tintColor: tintColor,
-                    }}></Image>
+                    }}/>
 				)
 			},
 		},
@@ -83,7 +83,7 @@ const Tabbar = TabNavigator({
                         width: 24,
                         height: 24,
                         tintColor: tintColor,
-                    }}></Image>
+                    }}/>
 				)
 			},
 		},
@@ -100,7 +100,7 @@ const Tabbar = TabNavigator({
                         width: 24,
                         height: 24,
                         tintColor: tintColor,
-                    }}></Image>
+                    }}/>
 				)
 			},
 		},
