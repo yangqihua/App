@@ -28,7 +28,7 @@ import HomeBack from '../pages/homeback/Home';
 import My from '../pages/my/My';
 
 
-import Home from '../pages/home/Home';
+import Home from '../pages/home/home/Home';
 import Forum from '../pages/home/Forum';
 import Top from '../pages/home/Top';
 import Me from '../pages/home/Me';

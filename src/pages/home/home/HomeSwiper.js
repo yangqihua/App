@@ -12,10 +12,10 @@ import {
 	Dimensions,
 	TouchableOpacity, TouchableWithoutFeedback
 } from 'react-native';
-import HttpUtil from '../utils/HTTPUtil'
+import HttpUtil from '../../../utils/HTTPUtil'
 import Swiper from 'react-native-swiper';
 import {CachedImage} from "react-native-img-cache";
-import {base_public_url} from '../utils/Constants'
+import {base_public_url} from '../../../utils/Constants'
 const windowWidth = Dimensions.get('window').width;
 
 class HomeSwiper extends React.Component {

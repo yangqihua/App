@@ -1,18 +1,19 @@
+/**
+ * Created by yangqihua on 2017/11/25.
+ */
 import React, {PureComponent} from 'react'
 import {
 	View, Text, StyleSheet, TouchableWithoutFeedback, Image, Dimensions,
 	PixelRatio,
 } from 'react-native'
 import {CachedImage} from "react-native-img-cache";
-import * as color from '../../utils/Theme';
-import {base_public_url} from '../../utils/Constants'
-class Cell extends PureComponent {
+import * as color from '../utils/Theme';
+import {base_public_url} from '../utils/Constants'
+class HomeCell extends PureComponent {
 
 	renderItem(item) {
-		// console.log("item", item)
 		return (
-			<TouchableWithoutFeedback key={item.key} onPress={this.props.onPress}>
-
+			<TouchableWithoutFeedback key={item.key} onPress={()=>this.goDetails(item['goods_id'])}>
 				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
 					<CachedImage source={{uri: base_public_url+item.home_url.url}} style={styles.icon}/>
 
@@ -28,6 +29,12 @@ class Cell extends PureComponent {
 
 			</TouchableWithoutFeedback>
 		);
+	}
+
+	goDetails(goods_id){
+		this.props.navigation.navigate('GoodsDetails',{
+			title:'详情',
+		})
 	}
 
 	render() {
@@ -101,4 +108,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Cell
+export default HomeCell

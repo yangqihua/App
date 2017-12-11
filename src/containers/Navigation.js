@@ -10,6 +10,8 @@ import Webv from '../pages/webview/Webv';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
 import * as color from '../utils/Theme';
 
+import GoodsDetails from '../pages/goods/Details';
+
 const AppNavigation = StackNavigator(
 	{
 		Launch: {
@@ -17,6 +19,9 @@ const AppNavigation = StackNavigator(
 		},
 		Tabbar: {
 			screen: Tabbar,
+		},
+		GoodsDetails: {
+			screen: GoodsDetails,
 		},
 		Blank: {
 			screen: Blank,

@@ -5,16 +5,13 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, ScrollView, View} from 'react-native';
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view';
-import Cell from './Cell'
-import testData from './data'
 
-import HomeTabBar from '../../components/HomeTabBar';
-
-import HomeSwiper from '../../components/HomeSwiper';
-import RefreshListView, {RefreshState} from '../../components/RefreshListView'
-import * as color from '../../utils/Theme';
-import Utils from '../../utils/Utils';
-import HttpUtil from '../../utils/HTTPUtil'
+import HomeCell from '../../../components/GoodsCell'
+import HomeSwiper from './HomeSwiper';
+import RefreshListView, {RefreshState} from '../../../components/RefreshListView'
+import * as color from '../../../utils/Theme';
+import Utils from '../../../utils/Utils';
+import HttpUtil from '../../../utils/HTTPUtil'
 
 class Home extends React.Component {
 
@@ -24,10 +21,7 @@ class Home extends React.Component {
 
 	constructor(props) {
 		super(props);
-		const category = [{category: 0, name: '精选'}, {category: 1, name: '实用类'}, {
-			category: 2,
-			name: '黑科技'
-		}, {category: 3, name: '有意思'}, {category: 4, name: '萌萌哒'}];
+		const category = [{category: 0, name: '精选'}, {category: 1, name: '实用类'}, {category: 2,name: '黑科技'}, {category: 3, name: '有意思'}, {category: 4, name: '萌萌哒'}];
 		this.state = {category: category, activeCategory: 1};
 	}
 
@@ -43,7 +37,7 @@ class Home extends React.Component {
 				renderTabBar={() => <DefaultTabBar style={{height: 38,borderWidth:1,borderColor:color.themeHeightLine,paddingTop:8}}/>}
 			>
 				{this.state.category.map(cate => {
-					return <TabContent key={cate.category} category={cate.category} tabLabel={cate.name}/>
+					return <TabContent navigation={this.props.navigation} key={cate.category} category={cate.category} tabLabel={cate.name}/>
 				})}
 			</ScrollableTabView>
 		);
@@ -70,6 +64,7 @@ export default Home;
 class TabContent extends Component {
 	static defaultProps = {
 		category: 0,
+		navigation:null,
 	}
 
 	constructor(props) {
@@ -147,7 +142,7 @@ class TabContent extends Component {
 	}
 
 	renderCell = (info) => {
-		return <Cell items={info.item}/>
+		return <HomeCell items={info.item} navigation={this.props.navigation}/>
 	}
 }
 
