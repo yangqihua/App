@@ -11,6 +11,7 @@ import testData from './data'
 
 import HomeTabBar from '../../components/HomeTabBar';
 
+import HomeSwiper from '../../components/HomeSwiper';
 import * as color from '../../utils/Theme';
 import Utils from '../../utils/Utils';
 import HttpUtil from '../../utils/HTTPUtil'
@@ -83,6 +84,7 @@ class TabContent extends Component {
 	render() {
 		return (
 			<View>
+				{this.props.category==0?<HomeSwiper/>:null}
 				<RefreshListView
 					data={this.state.data}
 					keyExtractor={this.keyExtractor}
