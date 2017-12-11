@@ -5,13 +5,13 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, ScrollView, View} from 'react-native';
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view';
-import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 import Cell from './Cell'
 import testData from './data'
 
 import HomeTabBar from '../../components/HomeTabBar';
 
 import HomeSwiper from '../../components/HomeSwiper';
+import RefreshListView, {RefreshState} from '../../components/RefreshListView'
 import * as color from '../../utils/Theme';
 import Utils from '../../utils/Utils';
 import HttpUtil from '../../utils/HTTPUtil'
@@ -84,11 +84,11 @@ class TabContent extends Component {
 	render() {
 		return (
 			<View>
-				{this.props.category==0?<HomeSwiper/>:null}
 				<RefreshListView
+					ListHeaderComponent={this.props.category==0?<HomeSwiper/>:null}
 					data={this.state.data}
 					keyExtractor={this.keyExtractor}
-					renderItem={this.renderCell}
+					renderItem={this.renderCell.bind(this)}
 					refreshState={this.state.refreshState}
 					onHeaderRefresh={this.onHeaderRefresh}
 					onFooterRefresh={this.onFooterRefresh}
