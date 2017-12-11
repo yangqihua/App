@@ -2,9 +2,9 @@
  * Created by yangqihua on 2017/11/22.
  */
 
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {Text, StyleSheet, ScrollView, View} from 'react-native';
-import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view';
 import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 import Cell from './Cell'
 import testData from './data'
@@ -23,23 +23,25 @@ class Home extends React.Component {
 
 	constructor(props) {
 		super(props);
-		const category = [{category:0,name:'精选'},{category:1,name:'实用类'},{category:2,name:'黑科技'},{category:3,name:'有意思'},{category:4,name:'萌萌哒'}];
-		this.state = {category:category,activeCategory:1};
+		const category = [{category: 0, name: '精选'}, {category: 1, name: '实用类'}, {
+			category: 2,
+			name: '黑科技'
+		}, {category: 3, name: '有意思'}, {category: 4, name: '萌萌哒'}];
+		this.state = {category: category, activeCategory: 1};
 	}
 
 	render() {
 		return (
 			<ScrollableTabView
-				style={{backgroundColor:color.themeWhite}}
-				tabBarUnderlineStyle={{backgroundColor:color.themeWhite,height:2}}
-				tabBarInactiveTextColor='mintcream'
-				tabBarActiveTextColor={color.themeWhite}
-				tabBarBackgroundColor={color.themeRed}
-				tabBarTextStyle={{fontSize:13}}
+				tabBarUnderlineStyle={{backgroundColor:color.themeRed,height:2}}
+				tabBarInactiveTextColor={color.themeBlack}
+				tabBarActiveTextColor={color.themeRed}
+				tabBarBackgroundColor={color.themeWhite}
+				tabBarTextStyle={{fontSize:12}}
 				ref="scrollableTabView"
-				renderTabBar={() => <ScrollableTabBar style={{height: 40}} tabStyle={{height: 36}}/>}
+				renderTabBar={() => <DefaultTabBar style={{height: 38,borderWidth:1,borderColor:color.themeHeightLine,paddingTop:8}}/>}
 			>
-				{this.state.category.map(cate=>{
+				{this.state.category.map(cate => {
 					return <TabContent key={cate.category} category={cate.category} tabLabel={cate.name}/>
 				})}
 			</ScrollableTabView>
@@ -64,17 +66,17 @@ const styles = StyleSheet.create({
 export default Home;
 
 
-class TabContent extends Component{
+class TabContent extends Component {
 	static defaultProps = {
-		category:0,
+		category: 0,
 	}
 
 	constructor(props) {
 		super(props);
-		this.queryParams = {page:1,limit:10};
+		this.queryParams = {page: 1, limit: 10};
 		this.state = {
-			data:[],    // 为了便于list渲染，每个小数组包含两条数据，一行有两个商品
-			refreshState:RefreshState.Idle
+			data: [],    // 为了便于list渲染，每个小数组包含两条数据，一行有两个商品
+			refreshState: RefreshState.Idle
 		};
 	}
 
@@ -101,16 +103,16 @@ class TabContent extends Component{
 		this.setState({refreshState: RefreshState.HeaderRefreshing})
 		this.queryParams.page = 1;
 		let params = {
-			url:'goods/homelist',
-			params:{page:this.queryParams.page,limit:this.queryParams.limit,category:this.props.category},
-			scb:(result)=>{
+			url: 'goods/homelist',
+			params: {page: this.queryParams.page, limit: this.queryParams.limit, category: this.props.category},
+			scb: (result) => {
 				this.setState({
-					data: Utils.splitArr(result,2),
+					data: Utils.splitArr(result, 2),
 					refreshState: RefreshState.Idle,
 				});
 				this.queryParams.page++;
 			},
-			ecb:(err)=>{
+			ecb: (err) => {
 				this.setState({refreshState: RefreshState.Failure})
 			}
 		}
@@ -120,18 +122,18 @@ class TabContent extends Component{
 	onFooterRefresh = () => {
 		this.setState({refreshState: RefreshState.FooterRefreshing})
 		let params = {
-			url:'goods/homelist',
-			params:{page:this.queryParams.page,limit:this.queryParams.limit,category:this.props.category},
-			scb:(result)=>{
-				let refreshStatus = result.length<10?RefreshState.NoMoreData:RefreshState.Idle;
-				let data = [...this.state.data, ...Utils.splitArr(result,2)]
+			url: 'goods/homelist',
+			params: {page: this.queryParams.page, limit: this.queryParams.limit, category: this.props.category},
+			scb: (result) => {
+				let refreshStatus = result.length < 10 ? RefreshState.NoMoreData : RefreshState.Idle;
+				let data = [...this.state.data, ...Utils.splitArr(result, 2)]
 				this.setState({
 					data: data,
 					refreshState: refreshStatus,
 				})
 				this.queryParams.page++;
 			},
-			ecb:(err)=>{
+			ecb: (err) => {
 				this.setState({refreshState: RefreshState.Failure})
 			}
 		}
@@ -143,7 +145,7 @@ class TabContent extends Component{
 	}
 
 	renderCell = (info) => {
-		return <Cell items={info.item} />
+		return <Cell items={info.item}/>
 	}
 }
 
