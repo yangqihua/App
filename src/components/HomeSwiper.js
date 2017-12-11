@@ -10,61 +10,66 @@ import {
 	Image,
 	View,
 	Dimensions,
-	TouchableOpacity,TouchableWithoutFeedback
+	TouchableOpacity, TouchableWithoutFeedback
 } from 'react-native';
-
+import HttpUtil from '../utils/HTTPUtil'
 import Swiper from 'react-native-swiper';
-
-const {windowWidth} = Dimensions.get('window');
+import {CachedImage} from "react-native-img-cache";
+import {base_public_url} from '../utils/Constants'
+const windowWidth = Dimensions.get('window').width;
 
 class HomeSwiper extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			imgList: [
-				'https://gitlab.pro/yuji/demo/uploads/d6133098b53fe1a5f3c5c00cf3c2d670/DVrj5Hz.jpg_1',
-				'https://gitlab.pro/yuji/demo/uploads/2d5122a2504e5cbdf01f4fcf85f2594b/Mwb8VWH.jpg',
-				'https://gitlab.pro/yuji/demo/uploads/4421f77012d43a0b4e7cfbe1144aac7c/XFVzKhq.jpg',
-				'https://gitlab.pro/yuji/demo/uploads/576ef91941b0bda5761dde6914dae9f0/kD3eeHe.jpg'
-			],
+			data: [],
 		};
 	}
 
-
 	componentDidMount() {
-
+		console.log("componentDidMount")
+		let params = {
+			url: 'ads/homeads',
+			scb: (result) => {
+				console.log("ad result:", result)
+				this.setState({
+					data: result,
+				})
+			}
+		};
+		HttpUtil.get(params)
 	}
 
-	onPress() {
+	onPress(goods_id) {
 	}
 
 	render() {
 
 		return (
-			<Swiper style={styles.wrapper}
-			        height={180}
-			        onMomentumScrollEnd={(e, state, context) => console.log('index:', state.index)}
-			        dot={<View style={{backgroundColor: 'rgba(255,255,255,.2)', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
-			        activeDot={<View style={{backgroundColor: 'rgba(255,255,255,.8)', width: 7, height: 7, borderRadius: 4, marginLeft: 5, marginRight: 5, marginTop: 3, marginBottom: 3}} />}
+			<Swiper height={windowWidth*3/5}
+			        dot={<View style={{backgroundColor: 'rgba(200, 200, 200,.6)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
+			        activeDot={<View style={{backgroundColor: 'rgba(254,65,87,.8)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
 			        paginationStyle={{
-			          bottom: 5, justifyContent: 'center', alignItems: 'center'
+			          right:10,bottom: 11, justifyContent: 'flex-end',zIndex: 2
 			        }}
-			        loop
+			        loop autoplay
 			>
-				<TouchableWithoutFeedback style={styles.slide} onPress={this.onPress}>
-					<Image resizeMode='cover' style={styles.image} source={{uri: this.state.imgList[0]}}/>
-				</TouchableWithoutFeedback>
-				<TouchableWithoutFeedback style={styles.slide}>
-					<Image resizeMode='cover' style={styles.image} source={{uri: this.state.imgList[1]}}/>
-				</TouchableWithoutFeedback>
-				<TouchableWithoutFeedback style={styles.slide}>
-					<Image resizeMode='cover' style={styles.image} source={{uri: this.state.imgList[2]}}/>
-				</TouchableWithoutFeedback>
-				<TouchableWithoutFeedback style={styles.slide}>
-					<Image resizeMode='cover' style={styles.image} source={{uri: this.state.imgList[3]}}/>
-				</TouchableWithoutFeedback>
-
+				{this.state.data.map(item => {
+					return (
+						<TouchableWithoutFeedback key={item['goods_id']} style={styles.slide}
+						                          onPress={()=>this.onPress(item['goods_id'])}>
+							<View>
+								<View style={styles.titleView}>
+									<Text
+										style={{color: 'white',  fontSize: 15,}}>{item['desc']}</Text>
+								</View>
+								<CachedImage resizeMode='cover' style={styles.image}
+								             source={{uri: base_public_url+item['img_url']}}/>
+							</View>
+						</TouchableWithoutFeedback>
+					)
+				})}
 			</Swiper>
 		);
 	}
@@ -72,21 +77,24 @@ class HomeSwiper extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		width: windowWidth,
-		height: windowWidth*3/5,
-	},
 	image: {
 		width: windowWidth,
-		height: windowWidth*3/5,
-		flex: 1
+		height: windowWidth * 3 / 5,
 	},
-	wrapper: {},
-
 	slide: {
 		flex: 1,
 		justifyContent: 'center',
 		backgroundColor: 'transparent'
+	},
+	titleView: {
+		justifyContent: 'center',
+		position: 'absolute',
+		bottom: 0,
+		width: windowWidth,
+		height: 36,
+		paddingLeft: 10,
+		backgroundColor: 'rgba(0,0,0,.2)',
+		zIndex: 1,
 	},
 	title: {
 		width: windowWidth,
