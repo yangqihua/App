@@ -1,5 +1,6 @@
+import React from 'react';
 import {
-	Platform,
+	Platform, Image, TouchableOpacity,View
 } from 'react-native';
 import {StackNavigator} from 'react-navigation';
 import Launch from '../pages/launch/Launch';
@@ -12,6 +13,22 @@ import * as color from '../utils/Theme';
 
 import GoodsDetails from '../pages/goods/Details';
 
+const StackOptions = ({navigation}) => {
+	let {goBack,headerRight} = navigation;
+	const headerLeft = (
+		<TouchableOpacity onPress={()=>goBack()} style={{paddingLeft:12,paddingRight:12}}>
+			<Image style={{width: 18, height: 18,}}
+			       source={require('../images/back_white.png')}/>
+		</TouchableOpacity>
+	);
+	if(!headerRight){
+		headerRight = (
+			<View></View>
+		);
+	}
+	return {headerLeft,headerRight}
+};
+
 const AppNavigation = StackNavigator(
 	{
 		Launch: {
@@ -22,6 +39,7 @@ const AppNavigation = StackNavigator(
 		},
 		GoodsDetails: {
 			screen: GoodsDetails,
+			navigationOptions: ({navigation}) => StackOptions({navigation})
 		},
 		Blank: {
 			screen: Blank,
