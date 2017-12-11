@@ -29,7 +29,7 @@ import My from '../pages/my/My';
 
 
 import Home from '../pages/home/Home';
-import Recommend from '../pages/home/Recommend';
+import Forum from '../pages/home/Forum';
 import Top from '../pages/home/Top';
 import Me from '../pages/home/Me';
 
@@ -54,14 +54,14 @@ const Tabbar = TabNavigator({
 			},
 		},
 	},
-	Recommend: {
-		screen: Recommend,
+	Top: {
+		screen: Top,
 		navigationOptions: {
-			tabBarLabel: '每周推荐',
+			tabBarLabel: '榜单',
 			tabBarIcon: ({tintColor}) => {
 				return (
 					<Image
-						source={require('../../res/img/home/recommend.png')}
+						source={require('../../res/img/home/top.png')}
 						style={{
                         width: 24,
                         height: 24,
@@ -71,14 +71,14 @@ const Tabbar = TabNavigator({
 			},
 		},
 	},
-	Top: {
-		screen: Top,
+	Forum: {
+		screen: Forum,
 		navigationOptions: {
-			tabBarLabel: '榜单',
+			tabBarLabel: '动态',
 			tabBarIcon: ({tintColor}) => {
 				return (
 					<Image
-						source={require('../../res/img/home/top.png')}
+						source={require('../../res/img/home/recommend.png')}
 						style={{
                         width: 24,
                         height: 24,

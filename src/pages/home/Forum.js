@@ -5,9 +5,9 @@
 import React from 'react';
 import {Text,StyleSheet, ScrollView} from 'react-native';
 
-class Recommend extends React.Component {
+class Forum extends React.Component {
 	static navigationOptions = {
-		title: "每周推荐",
+		title: "动态",
 	}
 	constructor(props) {
 		super(props);
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Recommend;
+export default Forum;
