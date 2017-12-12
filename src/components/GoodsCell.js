@@ -13,7 +13,7 @@ class HomeCell extends PureComponent {
 
 	renderItem(item) {
 		return (
-			<TouchableWithoutFeedback key={item.key} onPress={()=>this.goDetails(item['goods_id'])}>
+			<TouchableWithoutFeedback key={item.key} onPress={()=>this.goDetails(item['id'])}>
 				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
 					<CachedImage source={{uri: base_public_url+item.home_url.url}} style={styles.icon}/>
 
@@ -33,11 +33,12 @@ class HomeCell extends PureComponent {
 
 	goDetails(goods_id){
 		this.props.navigation.navigate('GoodsDetails',{
-			title:'详情',
+			goods_id:goods_id,
 		})
 	}
 
 	render() {
+
 		return (
 			<View style={styles.container}>
 				{this.props.items.map((item, index) => {

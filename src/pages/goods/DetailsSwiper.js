@@ -12,58 +12,43 @@ import {
 	Dimensions,
 	TouchableOpacity, TouchableWithoutFeedback
 } from 'react-native';
-import HttpUtil from '../../../utils/HTTPUtil'
+
 import Swiper from 'react-native-swiper';
 import {CachedImage} from "react-native-img-cache";
-import {base_public_url} from '../../../utils/Constants'
+import {base_public_url} from '../../utils/Constants'
 const windowWidth = Dimensions.get('window').width;
 
-class HomeSwiper extends React.Component {
+class DetailsSwiper extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			data: [],
-		};
 	}
 
-	componentDidMount() {
-		let params = {
-			url: 'ads/homeads',
-			scb: (result) => {
-				this.setState({
-					data: result,
-				})
-			}
-		};
-		HttpUtil.get(params)
-	}
-
-	onPress(goods_id) {
+	onPress(url) {
+		console.log("url:",url);
 	}
 
 	render() {
-
 		return (
-			<Swiper height={windowWidth*3/5}
+			<Swiper height={windowWidth}
 			        dot={<View style={{backgroundColor: 'rgba(200, 200, 200,.6)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
 			        activeDot={<View style={{backgroundColor: 'rgba(254,65,87,.8)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
 			        paginationStyle={{
 			          right:10,bottom: 11, justifyContent: 'flex-end',zIndex: 2
 			        }}
-			        loop autoplay
+			        loop
 			>
-				{this.state.data.map(item => {
+				{this.props.img_urls.map((item,index) => {
 					return (
-						<TouchableWithoutFeedback key={item['goods_id']} style={styles.slide}
-						                          onPress={()=>this.onPress(item['goods_id'])}>
+						<TouchableWithoutFeedback key={index} style={styles.slide}
+						                          onPress={()=>this.onPress(item['url'])}>
 							<View>
 								<View style={styles.titleView}>
 									<Text
 										style={{color: 'white',  fontSize: 15,}}>{item['desc']}</Text>
 								</View>
 								<CachedImage resizeMode='cover' style={styles.image}
-								             source={{uri: base_public_url+item['img_url']}}/>
+								             source={{uri: base_public_url+item['url']}}/>
 							</View>
 						</TouchableWithoutFeedback>
 					)
@@ -77,7 +62,7 @@ class HomeSwiper extends React.Component {
 const styles = StyleSheet.create({
 	image: {
 		width: windowWidth,
-		height: windowWidth * 3 / 5,
+		height: windowWidth,
 	},
 	slide: {
 		flex: 1,
@@ -103,4 +88,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default HomeSwiper;
+export default DetailsSwiper;

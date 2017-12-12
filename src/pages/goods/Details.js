@@ -4,11 +4,14 @@
 
 import React, {Component} from 'react';
 import {
-	View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform,Dimensions
+	View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform,Dimensions,TouchableWithoutFeedback
 } from 'react-native';
 
 import * as themeColor from '../../utils/Theme';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import HttpUtil from '../../utils/HTTPUtil'
+import DetailsSwiper from './DetailsSwiper';
+import Swiper from 'react-native-swiper';
 
 let backImgWhite = require('../../images/back_white.png')
 let backImgGray = require('../../images/back_gray.png')
@@ -27,12 +30,30 @@ class Details extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			backImg:backImgGray
+			backImg:backImgGray,
+			data:{img_urls:[]},
 		};
+	}
+
+	componentDidMount() {
+		let params = {
+			url: 'goods/details?goods_id='+this.props.navigation.state.params.goods_id,
+			scb: (result) => {
+				console.log("reuslt:",result);
+				this.setState({
+					data: result,
+				})
+			}
+		};
+		HttpUtil.get(params)
 	}
 
 	goBack() {
 		this.props.navigation.goBack();
+	}
+
+	onPress(){
+		console.log("presssssssss")
 	}
 
 	onChangeHeaderVisibility(visible){
@@ -45,8 +66,8 @@ class Details extends Component {
 
 	renderBackground() {
 		return (
-			<View key="background">
-				<Image resizeMode='cover' style={{width:windowWidth,height:parallax_header_height}} source={{uri: backgroudUrl}}/>
+			<View key="background" style={{width:windowWidth,height:windowWidth}}>
+				<DetailsSwiper img_urls={this.state.data.img_urls}/>
 			</View>
 		)
 	}
@@ -91,6 +112,7 @@ class Details extends Component {
 					renderFixedHeader={() => this.renderFixedHeader()}>
 
 					<ScrollView>
+						{/*<DetailsSwiper img_urls={this.state.data.img_urls}/>*/}
 						{[12, 32, 123, 2, 4, 32, 432, 213, 123, 123, 2, 31, 23, 12, 3123, 123, 12, 5, 5, 345, 34, 5, 34, 53, 52, 35, 2352, 35, 23, 5, 23, 123, 12, 31, 23, 1].map((item, index) => {
 							return (
 								<Text style={{height:30}} key={index}>hello list {item}</Text>
@@ -106,6 +128,34 @@ class Details extends Component {
 }
 
 const styles = StyleSheet.create({
+
+	wrapper: {
+		zIndex:999
+	},
+	slide1: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#9DD6EB',
+	},
+	slide2: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#97CAE5',
+	},
+	slide3: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#92BBD9',
+	},
+	text: {
+		color: '#fff',
+		fontSize: 30,
+		fontWeight: 'bold',
+	},
+
 
 	stickySection: {
 		height: sticky_header_height,
