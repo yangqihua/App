@@ -28,11 +28,9 @@ class HomeSwiper extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log("componentDidMount")
 		let params = {
 			url: 'ads/homeads',
 			scb: (result) => {
-				console.log("ad result:", result)
 				this.setState({
 					data: result,
 				})

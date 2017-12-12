@@ -39,10 +39,11 @@ const AppNavigation = StackNavigator(
 		},
 		GoodsDetails: {
 			screen: GoodsDetails,
-			navigationOptions: ({navigation}) => StackOptions({navigation})
+			// navigationOptions: ({navigation}) => StackOptions({navigation})
 		},
 		Blank: {
 			screen: Blank,
+			navigationOptions: ({navigation}) => StackOptions({navigation})
 		},
 		Webv: {
 			screen: Webv,
@@ -74,10 +75,10 @@ const AppNavigation = StackNavigator(
 			screenInterpolator: CardStackStyleInterpolator.forHorizontal,
 		}),
 		onTransitionStart: () => {
-			console.log('导航栏切换开始');
+			// console.log('导航栏切换开始');
 		},  // 回调
 		onTransitionEnd: () => {
-			console.log('导航栏切换结束');
+			// console.log('导航栏切换结束');
 		}  // 回调
 
 	}
