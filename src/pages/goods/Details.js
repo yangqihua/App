@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import * as themeColor from '../../utils/Theme';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import ParallaxScrollView from '../../components/ParallaxScrollView';
 import HttpUtil from '../../utils/HTTPUtil'
 import DetailsSwiper from './DetailsSwiper';
 import Swiper from 'react-native-swiper';
@@ -66,9 +66,7 @@ class Details extends Component {
 
 	renderBackground() {
 		return (
-			<View key="background" style={{width:windowWidth,height:windowWidth}}>
-				<DetailsSwiper img_urls={this.state.data.img_urls}/>
-			</View>
+				<Text style={styles.text} onPress={()=>this.onPress()}>悄悄的，我出现了</Text>
 		)
 	}
 
