@@ -4,10 +4,11 @@
 
 import React, {Component} from 'react';
 import {
-	View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform,Dimensions,TouchableWithoutFeedback
+	View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform,Dimensions,TouchableHighlight,TouchableWithoutFeedback
 } from 'react-native';
 
 import * as themeColor from '../../utils/Theme';
+import Toast, {DURATION} from 'react-native-easy-toast'
 import ParallaxScrollView from '../../components/ParallaxScrollView';
 import HttpUtil from '../../utils/HTTPUtil'
 import DetailsSwiper from './DetailsSwiper';
@@ -53,7 +54,7 @@ class Details extends Component {
 	}
 
 	onPress(){
-		console.log("presssssssss")
+		this.refs.toast.show('hello world!');
 	}
 
 	onChangeHeaderVisibility(visible){
@@ -66,7 +67,9 @@ class Details extends Component {
 
 	renderBackground() {
 		return (
-				<Text style={styles.text} onPress={()=>this.onPress()}>悄悄的，我出现了</Text>
+			<TouchableHighlight onPress={()=>this.onPress()} underlayColor='#f0f0f0' style={{marginTop:80}}>
+				<Text style={styles.text}>悄悄的，我出现了</Text>
+			</TouchableHighlight>
 		)
 	}
 
@@ -113,13 +116,13 @@ class Details extends Component {
 						{/*<DetailsSwiper img_urls={this.state.data.img_urls}/>*/}
 						{[12, 32, 123, 2, 4, 32, 432, 213, 123, 123, 2, 31, 23, 12, 3123, 123, 12, 5, 5, 345, 34, 5, 34, 53, 52, 35, 2352, 35, 23, 5, 23, 123, 12, 31, 23, 1].map((item, index) => {
 							return (
-								<Text style={{height:30}} key={index}>hello list {item}</Text>
+								<Text style={{height:30}} key={index} onPress={()=>this.onPress()}>hello list {item}</Text>
 							)
 						})}
 
 					</ScrollView>
 				</ParallaxScrollView>
-
+				<Toast ref="toast"/>
 			</View>
 		);
 	}

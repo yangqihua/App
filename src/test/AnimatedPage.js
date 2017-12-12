@@ -7,8 +7,10 @@ import {
 	Easing,
 	View,
 	StyleSheet,
-	Text,TouchableHighlight
+	Text, TouchableHighlight
 } from 'react-native';
+
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 class AnimatedPage extends Component {
 
@@ -28,20 +30,23 @@ class AnimatedPage extends Component {
 		this.renderSimperAnim();
 	}
 
-	pressText(i) {
-		console.log("点击了:" + i);
+	onPress() {
+		this.refs.toast.show("点击了:");
 	}
 
 	renderSimper() {
 		return (
-			<Animated.View style={[styles.demo, {
+			<View>
+				<Animated.View style={[styles.backgroundImage, {
 				opacity: this.state.fadeInOpacity
 			}]}>
-				<TouchableHighlight onPress={()=>this.pressText(213)} underlayColor='#f0f0f0'>
-					<Text style={styles.text}>悄悄的，我出现了</Text>
-				</TouchableHighlight>
+					<TouchableHighlight onPress={()=>this.onPress()} underlayColor='#f0f0f0' style={{marginTop:80}}>
+						<Text style={styles.text}>悄悄的，我出现了</Text>
+					</TouchableHighlight>
 
-			</Animated.View>
+				</Animated.View>
+				<Toast ref="toast"/>
+			</View>
 		);
 	}
 
@@ -127,7 +132,15 @@ let styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: 30
-	}
+	},
+	backgroundImage: {
+		position: 'absolute',
+		backgroundColor: 'transparent',
+		overflow: 'hidden',
+		top: 0,
+		width:200,
+		height:400,
+	},
 });
 
 export default AnimatedPage;
