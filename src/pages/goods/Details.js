@@ -67,9 +67,9 @@ class Details extends Component {
 
 	renderBackground() {
 		return (
-			<TouchableHighlight onPress={()=>this.onPress()} underlayColor='#f0f0f0' style={{marginTop:80}}>
-				<Text style={styles.text}>悄悄的，我出现了</Text>
-			</TouchableHighlight>
+			<View key="background" style={{width:windowWidth,height:windowWidth}}>
+				<DetailsSwiper img_urls={this.state.data.img_urls} />
+			</View>
 		)
 	}
 
@@ -98,13 +98,20 @@ class Details extends Component {
 			<View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
 				<ParallaxScrollView
 					backgroundColor={themeColor.themeRed}
+					backgroundScrollSpeed={10}
 					headerBackgroundColor="#333"
 					stickyHeaderHeight={ sticky_header_height }
 					parallaxHeaderHeight={ parallax_header_height }
-					backgroundSpeed={10}
-					style={{flex:1}}
 
 					onChangeHeaderVisibility={(visible)=> this.onChangeHeaderVisibility(visible)}
+
+					renderForeground={() => (
+			          <View key="parallax-header" style={ styles.parallaxHeader }>
+			            <View style={{flex: 1, flexDirection: 'row',justifyContent: 'center',alignItems: 'center', position: 'absolute',left:20, bottom: 40, backgroundColor: 'rgba(0,0,0,0)',}}>
+			              <Text style={{color: 'white', fontSize: 24, opacity: 0.9, marginRight: 10}}>#renderForeground</Text>
+			            </View>
+			          </View>
+			        )}
 
 					renderBackground={() => this.renderBackground()}
 

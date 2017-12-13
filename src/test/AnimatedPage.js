@@ -40,7 +40,7 @@ class AnimatedPage extends Component {
 				<Animated.View style={[styles.backgroundImage, {
 				opacity: this.state.fadeInOpacity
 			}]}>
-					<TouchableHighlight onPress={()=>this.onPress()} underlayColor='#f0f0f0' style={{marginTop:80}}>
+					<TouchableHighlight onPress={()=>this.onPress()} underlayColor='#f0f0f0' style={{marginTop:180}}>
 						<Text style={styles.text}>悄悄的，我出现了</Text>
 					</TouchableHighlight>
 
