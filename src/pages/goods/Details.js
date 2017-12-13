@@ -33,6 +33,7 @@ class Details extends Component {
 		this.state = {
 			backImg:backImgGray,
 			data:{img_urls:[]},
+			test:[],
 		};
 	}
 
@@ -40,13 +41,18 @@ class Details extends Component {
 		let params = {
 			url: 'goods/details?goods_id='+this.props.navigation.state.params.goods_id,
 			scb: (result) => {
-				console.log("reuslt:",result);
 				this.setState({
 					data: result,
 				})
 			}
 		};
 		HttpUtil.get(params)
+
+		setTimeout(()=>{
+			this.setState({
+				test:[1,2,3,4]
+			})
+		},200)
 	}
 
 	goBack() {
@@ -97,9 +103,7 @@ class Details extends Component {
 		return (
 			<View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
 				<ParallaxScrollView
-					backgroundColor={themeColor.themeRed}
-					backgroundScrollSpeed={10}
-					headerBackgroundColor="#333"
+					stickyHeaderBackgroundColor={themeColor.themeRed}
 					stickyHeaderHeight={ sticky_header_height }
 					parallaxHeaderHeight={ parallax_header_height }
 
@@ -136,34 +140,6 @@ class Details extends Component {
 }
 
 const styles = StyleSheet.create({
-
-	wrapper: {
-		zIndex:999
-	},
-	slide1: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#9DD6EB',
-	},
-	slide2: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#97CAE5',
-	},
-	slide3: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#92BBD9',
-	},
-	text: {
-		color: '#fff',
-		fontSize: 30,
-		fontWeight: 'bold',
-	},
-
 
 	stickySection: {
 		height: sticky_header_height,

@@ -26,6 +26,7 @@ const interpolate = (value, opts) => {
 
 // Properties accepted by `ParallaxScrollView`.
 const IPropTypes = {
+	stickyHeaderBackgroundColor:string,
 	backgroundColor: string,
 	backgroundScrollSpeed: number,
 	fadeOutForeground: bool,
@@ -45,7 +46,8 @@ const IPropTypes = {
 class ParallaxScrollView extends Component {
 	static defaultProps = {
 		backgroundScrollSpeed: 5,
-		backgroundColor: '#000',
+		stickyHeaderBackgroundColor: '#000',
+		backgroundColor: '#fff',
 		contentBackgroundColor: '#fff',
 		fadeOutForeground: true,
 		onChangeHeaderVisibility: () => {},
@@ -79,6 +81,7 @@ class ParallaxScrollView extends Component {
 
 	render() {
 		const {
+			stickyHeaderBackgroundColor,
 			backgroundColor,
 			backgroundScrollSpeed,
 			children,
@@ -114,7 +117,7 @@ class ParallaxScrollView extends Component {
 		const maybeStickyHeader = this._maybeRenderStickyHeader({
 			parallaxHeaderHeight,
 			stickyHeaderHeight,
-			backgroundColor,
+			stickyHeaderBackgroundColor,
 			renderFixedHeader,
 			renderStickyHeader
 		})
@@ -312,7 +315,7 @@ class ParallaxScrollView extends Component {
 	_maybeRenderStickyHeader({
 		parallaxHeaderHeight,
 		stickyHeaderHeight,
-		backgroundColor,
+		stickyHeaderBackgroundColor,
 		renderFixedHeader,
 		renderStickyHeader
 	}) {
@@ -333,7 +336,7 @@ class ParallaxScrollView extends Component {
 					{renderStickyHeader
 						? <Animated.View
 							style={{
-									backgroundColor: backgroundColor,
+									backgroundColor: stickyHeaderBackgroundColor,
 									height: stickyHeaderHeight,
 									opacity: interpolate(scrollY, {
 										inputRange: [0, p],
