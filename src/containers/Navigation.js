@@ -3,6 +3,7 @@ import {
 	Platform, Image, TouchableOpacity,View
 } from 'react-native';
 import {StackNavigator} from 'react-navigation';
+import PhotoSwiper from '../pages/common/PhotoSwiper';
 import Launch from '../pages/launch/Launch';
 import Tabbar from './Tabbar';
 import Blank from '../pages/blank/Blank';
@@ -12,6 +13,7 @@ import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/Car
 import * as color from '../utils/Theme';
 
 import GoodsDetails from '../pages/goods/Details';
+import PhotoPage from '../pages/common/PhotoPage';
 import AnimatedPage from '../test/AnimatedPage'
 const StackOptions = ({navigation}) => {
 	let {goBack,headerRight} = navigation;
@@ -31,9 +33,6 @@ const StackOptions = ({navigation}) => {
 
 const AppNavigation = StackNavigator(
 	{
-		AnimatedPage: {
-			screen: AnimatedPage,
-		},
 		Launch: {
 			screen: Launch,
 		},
@@ -47,6 +46,9 @@ const AppNavigation = StackNavigator(
 		Blank: {
 			screen: Blank,
 			navigationOptions: ({navigation}) => StackOptions({navigation})
+		},
+		PhotoPage: {
+			screen: PhotoPage,
 		},
 		Webv: {
 			screen: Webv,

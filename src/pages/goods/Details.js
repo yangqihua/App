@@ -41,6 +41,7 @@ class Details extends Component {
 		let params = {
 			url: 'goods/details?goods_id='+this.props.navigation.state.params.goods_id,
 			scb: (result) => {
+				console.log("result:",result)
 				this.setState({
 					data: result,
 				})
@@ -74,7 +75,7 @@ class Details extends Component {
 	renderBackground() {
 		return (
 			<View key="background" style={{width:windowWidth,height:windowWidth}}>
-				<DetailsSwiper img_urls={this.state.data.img_urls} />
+				<DetailsSwiper img_urls={this.state.data.img_urls} {...this.props}/>
 			</View>
 		)
 	}

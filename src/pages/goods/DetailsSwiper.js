@@ -14,9 +14,12 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
+import PhotoView from 'react-native-photo-view';
 import {CachedImage} from "react-native-img-cache";
 import {base_public_url} from '../../utils/Constants'
+import PhotoSwiper from '../common/PhotoSwiper'
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 class DetailsSwiper extends React.Component {
 
@@ -24,32 +27,41 @@ class DetailsSwiper extends React.Component {
 		super(props);
 	}
 
-	onPress(url) {
-		console.log("url:",url);
+	thumbPressHandle(index) {
+		this.props.navigation.navigate('PhotoPage',{
+			showIndex:index,
+			imgList:this.props.img_urls,
+		})
 	}
+
+
 
 	render() {
 		return (
-			<Swiper height={windowWidth}
-			        dot={<View style={{backgroundColor: 'rgba(200, 200, 200,.6)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
-			        activeDot={<View style={{backgroundColor: 'rgba(254,65,87,.8)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
-			        paginationStyle={{
+			<View style={{flex:1}}>
+				<Swiper index={0}
+				        height={windowWidth}
+				        dot={<View style={{backgroundColor: 'rgba(200, 200, 200,.6)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
+				        activeDot={<View style={{backgroundColor: 'rgba(254,65,87,.8)', width: 6, height: 6, borderRadius: 3, margin: 3}} />}
+				        paginationStyle={{
 			          right:10,bottom: 11, justifyContent: 'center',zIndex: 2
 			        }}
-			        loop
-			>
-				{this.props.img_urls.map((item,index) => {
-					return (
-						<TouchableWithoutFeedback key={index} style={styles.slide}
-						                          onPress={()=>this.onPress(item['url'])}>
-							<View>
-								<CachedImage resizeMode='cover' style={styles.image}
-								             source={{uri: base_public_url+item['url']}}/>
-							</View>
-						</TouchableWithoutFeedback>
-					)
-				})}
-			</Swiper>
+				        loop
+				>
+					{this.props.img_urls.map((item, index) => {
+						return (
+							<TouchableWithoutFeedback key={index} style={styles.slide}
+							                          onPress={()=>this.thumbPressHandle(index)}>
+								<View>
+									<CachedImage resizeMode='cover' style={styles.image}
+									             source={{uri: base_public_url+item['url']}}/>
+								</View>
+							</TouchableWithoutFeedback>
+						)
+					})}
+				</Swiper>
+			</View>
+
 		);
 	}
 
@@ -64,21 +76,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		backgroundColor: 'transparent'
-	},
-	titleView: {
-		justifyContent: 'center',
-		position: 'absolute',
-		bottom: 0,
-		width: windowWidth,
-		height: 36,
-		paddingLeft: 10,
-		backgroundColor: 'rgba(0,0,0,.2)',
-		zIndex: 1,
-	},
-	text: {
-		color: '#fff',
-		fontSize: 30,
-		fontWeight: 'bold'
 	},
 
 });
