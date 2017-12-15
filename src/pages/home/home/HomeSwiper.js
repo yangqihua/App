@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import HttpUtil from '../../../utils/HTTPUtil'
 import Swiper from 'react-native-swiper';
-import {CachedImage} from "react-native-img-cache";
+import {CachedImage} from "react-native-cached-image";
 import {base_public_url} from '../../../utils/Constants'
 const windowWidth = Dimensions.get('window').width;
 
@@ -63,7 +63,7 @@ class HomeSwiper extends React.Component {
 									<Text
 										style={{color: 'white',  fontSize: 15,}}>{item['desc']}</Text>
 								</View>
-								<CachedImage resizeMode='cover' style={styles.image}
+								<CachedImage style={styles.image}
 								             source={{uri: base_public_url+item['img_url']}}/>
 							</View>
 						</TouchableWithoutFeedback>

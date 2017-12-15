@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, ScrollView, View} from 'react-native';
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view';
 
-import HomeCell from '../../../components/GoodsCell'
+import GoodsCell from '../../../components/GoodsCell'
 import HomeSwiper from './HomeSwiper';
 import RefreshListView, {RefreshState} from '../../../components/RefreshListView'
 import * as color from '../../../utils/Theme';
@@ -142,7 +142,7 @@ class TabContent extends Component {
 	}
 
 	renderCell = (info) => {
-		return <HomeCell items={info.item} navigation={this.props.navigation}/>
+		return <GoodsCell items={info.item} navigation={this.props.navigation}/>
 	}
 }
 

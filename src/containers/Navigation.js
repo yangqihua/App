@@ -15,6 +15,7 @@ import * as color from '../utils/Theme';
 import GoodsDetails from '../pages/goods/Details';
 import PhotoPage from '../pages/common/PhotoPage';
 import AnimatedPage from '../test/AnimatedPage'
+import CacheImage from '../test/CacheImage'
 const StackOptions = ({navigation}) => {
 	let {goBack,headerRight} = navigation;
 	const headerLeft = (
@@ -47,12 +48,18 @@ const AppNavigation = StackNavigator(
 			screen: Blank,
 			navigationOptions: ({navigation}) => StackOptions({navigation})
 		},
-		PhotoPage: {
-			screen: PhotoPage,
-		},
 		Webv: {
 			screen: Webv,
 		},
+
+		// test page
+		PhotoPage: {
+			screen: PhotoPage,
+		},
+		CacheImage: {
+			screen: CacheImage,
+		},
+
 	},
 	{
 		initialRouteName: 'Tabbar', // 默认显示界面

@@ -6,16 +6,19 @@ import {
 	View, Text, StyleSheet, TouchableWithoutFeedback, Image, Dimensions,
 	PixelRatio,
 } from 'react-native'
-import {CachedImage} from "react-native-img-cache";
+import {CachedImage} from "react-native-cached-image";
 import * as color from '../utils/Theme';
 import {base_public_url} from '../utils/Constants'
+
+const windowWidth = Dimensions.get('window').width;
+const img_thumbnail = '?imageView2/1/w/' + PixelRatio.get()*(windowWidth / 2 - 17);
 class HomeCell extends PureComponent {
 
 	renderItem(item) {
 		return (
 			<TouchableWithoutFeedback key={item.key} onPress={()=>this.goDetails(item['id'])}>
 				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
-					<CachedImage source={{uri: base_public_url+item.home_url.url}} style={styles.icon}/>
+					<CachedImage source={{uri: base_public_url+item.home_url.url+img_thumbnail}} style={styles.icon}/>
 
 					<View style={styles.textView}>
 						<Text style={styles.h1} numberOfLines={1}>{item.name}</Text>
@@ -50,7 +53,7 @@ class HomeCell extends PureComponent {
 	}
 }
 
-const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
 	icon: {
 		width: windowWidth / 2 - 17,
 		height: windowWidth / 2 - 17,
-		resizeMode: 'cover',
+		// resizeMode: 'cover',
 		borderTopRightRadius: 3,
 		borderTopLeftRadius: 3,
 		borderColor: color.themeBorder,

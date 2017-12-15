@@ -61,11 +61,12 @@ class PhotoSwiper extends React.Component {
 			return (
 				<View style={styles.slide} key={item['url']}>
 					<PhotoView
-						loadingIndicatorSource={require('../../images/loading.gif')}
 						source={{uri: base_public_url + item['url']+img_slide_thumbnail}}
 						onTap={this.viewerPressHandle.bind(this)}
 						onViewTap={this.viewerPressHandle.bind(this)}
-						style={styles.photo}/>
+						style={styles.photo}
+						loadingIndicatorSource={require('../../images/fail_img.png')}
+					/>
 				</View>
 			)
 		})

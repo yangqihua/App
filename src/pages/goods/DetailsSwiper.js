@@ -14,10 +14,8 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
-import PhotoView from 'react-native-photo-view';
-import {CachedImage} from "react-native-img-cache";
+import {CachedImage} from "react-native-cached-image";
 import {base_public_url} from '../../utils/Constants'
-import PhotoSwiper from '../common/PhotoSwiper'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -53,7 +51,7 @@ class DetailsSwiper extends React.Component {
 							<TouchableWithoutFeedback key={item['url']} style={styles.slide}
 							                          onPress={()=>this.thumbPressHandle(index)}>
 								<View>
-									<CachedImage resizeMode='cover' style={styles.image}
+									<CachedImage style={styles.image}
 									             source={{uri: base_public_url+item['url']}}/>
 								</View>
 							</TouchableWithoutFeedback>

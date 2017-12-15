@@ -10,6 +10,18 @@ export default class Utils {
 	}
 
 
+	static formatBytes(bytes, decimals) {
+		if (bytes === 0) {
+			return '0 B';
+		}
+		const k = 1000;
+		const dm = decimals + 1 || 3;
+		const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+		const i = Math.floor(Math.log(bytes) / Math.log(k));
+		return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+	}
+
+
     static objectIsValueEqual(object1, object2) {
         for (let _key in object1) {
             if (object1._key !== object2._key)return false;
@@ -27,4 +39,6 @@ export default class Utils {
         }
         return false;
     }
+
+
 }
