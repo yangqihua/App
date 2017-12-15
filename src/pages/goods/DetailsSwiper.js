@@ -50,7 +50,7 @@ class DetailsSwiper extends React.Component {
 				>
 					{this.props.img_urls.map((item, index) => {
 						return (
-							<TouchableWithoutFeedback key={index} style={styles.slide}
+							<TouchableWithoutFeedback key={item['url']} style={styles.slide}
 							                          onPress={()=>this.thumbPressHandle(index)}>
 								<View>
 									<CachedImage resizeMode='cover' style={styles.image}

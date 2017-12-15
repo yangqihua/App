@@ -59,8 +59,9 @@ class PhotoSwiper extends React.Component {
 	renderPhotoView() {
 		return this.props.imgList.map((item, index) => {
 			return (
-				<View style={styles.slide} key={index}>
+				<View style={styles.slide} key={item['url']}>
 					<PhotoView
+						loadingIndicatorSource={require('../../images/loading.gif')}
 						source={{uri: base_public_url + item['url']+img_slide_thumbnail}}
 						onTap={this.viewerPressHandle.bind(this)}
 						onViewTap={this.viewerPressHandle.bind(this)}

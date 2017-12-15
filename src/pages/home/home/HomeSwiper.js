@@ -55,6 +55,7 @@ class HomeSwiper extends React.Component {
 			>
 				{this.state.data.map(item => {
 					return (
+						this.state.data.length>0&&
 						<TouchableWithoutFeedback key={item['goods_id']} style={styles.slide}
 						                          onPress={()=>this.onPress(item['goods_id'])}>
 							<View>
