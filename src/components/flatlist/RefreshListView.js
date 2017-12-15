@@ -4,6 +4,8 @@
 import React, {PureComponent} from 'react'
 import {View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native'
 
+import FlatListItem from './FlatListItem';
+
 export const RefreshState = {
 	Idle: 0,
 	HeaderRefreshing: 1,
@@ -36,6 +38,13 @@ type State = {}
 class RefreshListView extends PureComponent {
 	props: Props
 	state: State
+
+	constructor(props) {
+		super(props);
+		this.state = {}
+		this.rowRefs =[]
+		this._onViewableItemsChanged = this._onViewableItemsChanged.bind(this)
+	}
 
 	componentWillReceiveProps(nextProps: Props) {
 		log('[RefreshListView]  RefreshListView componentWillReceiveProps ' + nextProps.refreshState)
@@ -85,6 +94,48 @@ class RefreshListView extends PureComponent {
 		return (refreshState == RefreshState.Idle)
 	}
 
+	_addRowRefs(ref, data){
+		this.rowRefs[data.index] = {
+			ref: ref,
+			item: data.item,
+			index: data.index,
+		}
+	}
+
+	_updateItem(index, visibility){
+		if (!this.rowRefs[index].ref) {
+			return false;
+		}
+		this.rowRefs[index].ref.setVisibility(visibility)
+		return visibility
+	}
+
+	_renderItem(data){
+		const view = this.props.renderItem(data)
+		return (
+			<FlatListItem
+				ref={ myItem => this._addRowRefs(myItem, data)}
+				viewComponent={view}
+				data={data}
+			/>
+		)
+	}
+
+	_onViewableItemsChanged (info: {
+		changed: Array<{
+			key: string,
+			isViewable: boolean,
+			item: any,
+			index: ?number,
+			section?: any,
+		}>
+	}
+	) {
+		info.changed.map(item =>
+			this._updateItem(item.index, item.isViewable)
+		)
+	}
+
 	render() {
 		log('[RefreshListView]  render')
 
@@ -95,7 +146,10 @@ class RefreshListView extends PureComponent {
 				onRefresh={this.onHeaderRefresh}
 				refreshing={this.props.refreshState == RefreshState.HeaderRefreshing}
 				ListFooterComponent={this.renderFooter}
+
 				{...this.props}
+				renderItem={ data => this._renderItem(data) }
+				onViewableItemsChanged={this._onViewableItemsChanged}
 			/>
 		)
 	}

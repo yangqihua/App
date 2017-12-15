@@ -8,7 +8,7 @@ import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-s
 
 import GoodsCell from '../../../components/GoodsCell'
 import HomeSwiper from './HomeSwiper';
-import RefreshListView, {RefreshState} from '../../../components/RefreshListView'
+import RefreshListView, {RefreshState} from '../../../components/flatlist/RefreshListView'
 import * as color from '../../../utils/Theme';
 import Utils from '../../../utils/Utils';
 import HttpUtil from '../../../utils/HTTPUtil'
