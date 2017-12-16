@@ -36,7 +36,7 @@ class PhotoSwiper extends React.Component {
 		setTimeout(() => {
 			this.setState({shouldLoad: true});
 			console.log("PhotoSwiper componentDidMount");
-		}, 200);
+		}, 250);
 	}
 
 	renderPagination(index, total, context) {
@@ -66,6 +66,14 @@ class PhotoSwiper extends React.Component {
 		)
 	};
 
+	onLoadStart(){
+
+	}
+
+	onLoadEnd(){
+
+	}
+
 	renderPhotoView() {
 		return this.props.imgList.map((item, index) => {
 			return (
@@ -73,7 +81,8 @@ class PhotoSwiper extends React.Component {
 					{
 						this.state.shouldLoad &&
 						<PhotoView
-							loadingIndicatorSource={() => <ActivityIndicator />}
+							onLoadStart={this.onLoadStart.bind(this)}
+							onLoadEnd={this.onLoadEnd.bind(this)}
 							source={{uri: base_public_url + item['url']+img_slide_thumbnail}}
 							onTap={this.viewerPressHandle.bind(this)}
 							onViewTap={this.viewerPressHandle.bind(this)}

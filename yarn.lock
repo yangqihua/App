@@ -3411,11 +3411,23 @@ react-native-fetch-blob@0.10.8, react-native-fetch-blob@^0.10.8:
     base-64 "0.1.0"
     glob "7.0.6"
 
+react-native-image-progress@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/react-native-image-progress/download/react-native-image-progress-1.0.1.tgz#5ceb4cfefd39d7ebdffab802bc984b5a0fc41021"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-photo-view@^1.5.2:
   version "1.5.2"
   resolved "http://registry.npm.taobao.org/react-native-photo-view/download/react-native-photo-view-1.5.2.tgz#5d7f406ed5532a5a8a78c8ef8f40e81f688de1e2"
   dependencies:
     prop-types "^15.5.10"
+
+react-native-progress@^3.4.0:
+  version "3.4.0"
+  resolved "http://registry.npm.taobao.org/react-native-progress/download/react-native-progress-3.4.0.tgz#c002e6efb2f0b82dd6889510e669c492da2718ac"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-native-scrollable-tab-view@^0.8.0:
   version "0.8.0"
