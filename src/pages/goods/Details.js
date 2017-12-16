@@ -15,7 +15,7 @@ import {
 	TouchableHighlight,
 	TouchableWithoutFeedback
 } from 'react-native';
-import VideoPlayer from '../../components/VideoPlayer';
+import VideoPlayer from '../../components/Player';
 
 import * as themeColor from '../../utils/Theme';
 import Toast, {DURATION} from 'react-native-easy-toast'
@@ -135,18 +135,17 @@ class Details extends Component {
 	renderVideos(video_urls) {
 		return video_urls.map((item, index) => {
 			return (
-				<View key={index} style={{flex:1}}>
+				<View key={index} style={{flex:1,marginBottom:100}}>
 					<Text
 						style={{lineHeight:28,fontSize:14,textAlign:'center',marginTop:12,marginBottom:3,color:themeColor.themeBlack}}>
 						{item.desc}
 					</Text>
 					<VideoPlayer
-						resizeMode='contain'
-						disableBack={ true }
-						disableFullscreen={ true }
-						disableVolume={ true }
-						source={{uri: base_public_url+item.url}}
-					    style={{width:windowWidth,height:300}}
+						endWithThumbnail
+						thumbnail={{ uri: 'http://ozg6xzz9f.bkt.clouddn.com/detail_pics/75/72cb84f07bcc77779c8561cf19caf46c.jpg' }}
+						video={{uri: base_public_url+item.url}}
+						videoWidth={windowWidth}
+						videoHeight={260}
 					/>
 				</View>
 			)
@@ -183,7 +182,7 @@ class Details extends Component {
 						<Text
 							style={{lineHeight:28,fontSize:13,textAlign:'center',color:themeColor.themeHighGrayText}}>{this.state.data.goods_desc}</Text>
 						<Text
-							style={{lineHeight:28,fontSize:20,textAlign:'center',color:themeColor.themeRed,marginTop:5}}>¥ {this.state.data.price}</Text>
+							style={{lineHeight:28,fontSize:20,textAlign:'center',color:themeColor.themeRed,marginTop:6}}>¥ {this.state.data.price}</Text>
 						<View style={{flexDirection: 'row',justifyContent:'center',marginTop:10,marginLeft:4 }}>
 							<View style={{flexDirection: 'row',paddingRight:20 }}>
 								<Image style={{width:14, height:14, marginRight: 5}}

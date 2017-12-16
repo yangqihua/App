@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@ldn0x7dc/react-native-slider@0.0.3":
+  version "0.0.3"
+  resolved "http://registry.npm.taobao.org/@ldn0x7dc/react-native-slider/download/@ldn0x7dc/react-native-slider-0.0.3.tgz#ff5308d1882e3bae4aa23bd861827726391c51f1"
+  dependencies:
+    react-native-gesture-responder "0.0.10"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "http://registry.npm.taobao.org/abab/download/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -3414,6 +3420,18 @@ react-native-fetch-blob@0.10.8, react-native-fetch-blob@^0.10.8:
   dependencies:
     base-64 "0.1.0"
     glob "7.0.6"
+
+react-native-fullscreen-media-kit@^0.8.8:
+  version "0.8.8"
+  resolved "http://registry.npm.taobao.org/react-native-fullscreen-media-kit/download/react-native-fullscreen-media-kit-0.8.8.tgz#7672f4c8b3c6786163d442596b13eb78bce3ec31"
+  dependencies:
+    "@ldn0x7dc/react-native-slider" "0.0.3"
+
+react-native-gesture-responder@0.0.10:
+  version "0.0.10"
+  resolved "http://registry.npm.taobao.org/react-native-gesture-responder/download/react-native-gesture-responder-0.0.10.tgz#32ee6c746c8ea73559c0aa151113356db5c4c297"
+  dependencies:
+    react-timer-mixin "^0.13.3"
 
 react-native-image-progress@^1.0.1:
   version "1.0.1"
