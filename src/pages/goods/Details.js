@@ -131,11 +131,23 @@ class Details extends Component {
 		this.refs.toast.show('videoError');
 	}
 
+	likeAction() {
+		this.refs.toast.show('收藏');
+	}
+
+	shareAction() {
+		this.refs.toast.show('分享');
+	}
+
+	buyAction() {
+		this.refs.toast.show('购买');
+	}
+
 
 	renderVideos(video_urls) {
 		return video_urls.map((item, index) => {
 			return (
-				<View key={index} style={{flex:1,marginBottom:100}}>
+				<View key={index} style={{flex:1,marginBottom:130}}>
 					<Text
 						style={{lineHeight:28,fontSize:14,textAlign:'center',marginTop:12,marginBottom:3,color:themeColor.themeBlack}}>
 						{item.desc}
@@ -208,12 +220,36 @@ class Details extends Component {
 						}
 
 						{
-							this.state.data.video_urls&&this.renderVideos(this.state.data.video_urls)
+							this.state.data.video_urls && this.renderVideos(this.state.data.video_urls)
 						}
-
-
 					</ScrollView>
 				</ParallaxScrollView>
+				<View
+					style={{flexDirection: 'row',position:'absolute',left:0,right:0,bottom:0,height:50,borderTopWidth:1,borderTopColor:themeColor.themeHighLine,backgroundColor:themeColor.themeWhite}}>
+					<View style={{flexDirection: 'row',width:'45%',justifyContent:'space-around',alignItems:'center'}}>
+						<TouchableWithoutFeedback onPress={this.likeAction.bind(this)}>
+							<View style={{justifyContent:'center',alignItems:'center',paddingLeft:12 }}>
+								<Image style={{width:15, height:15, marginBottom: 2}}
+								       source={require('../../images/like_empty.png')}/>
+								<Text
+									style={{color: themeColor.themeGray,fontSize:13,paddingTop:2}}>收藏</Text>
+							</View>
+						</TouchableWithoutFeedback>
+						<TouchableWithoutFeedback onPress={this.shareAction.bind(this)}>
+							<View style={{justifyContent:'center',alignItems:'center',paddingRight:12 }}>
+								<Image style={{width:15, height:15, marginBottom: 2}}
+								       source={require('../../images/share.png')}/>
+								<Text
+									style={{color: themeColor.themeGray,fontSize:13,paddingTop:2}}>分享</Text>
+							</View>
+						</TouchableWithoutFeedback>
+					</View>
+					<TouchableWithoutFeedback onPress={this.buyAction.bind(this)}>
+						<View style={{flex:1,backgroundColor:themeColor.themeRed,alignItems:'center',justifyContent:'center'}}>
+							<Text style={{fontSize:18,color:themeColor.themeWhite}}>立即购买</Text>
+						</View>
+					</TouchableWithoutFeedback>
+				</View>
 				<Toast ref="toast"/>
 			</View>
 		);
