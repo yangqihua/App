@@ -14,7 +14,8 @@ import * as color from '../utils/Theme';
 
 import GoodsDetails from '../pages/goods/Details';
 import PhotoPage from '../pages/common/PhotoPage';
-import AnimatedPage from '../test/AnimatedPage'
+import VideoPlayerTest from '../test/VideoPlayerTest'
+import VideoTest from '../test/VideoTest'
 import CacheImage from '../test/CacheImage'
 const StackOptions = ({navigation}) => {
 	let {goBack,headerRight} = navigation;
@@ -53,8 +54,12 @@ const AppNavigation = StackNavigator(
 		},
 
 		// test page
-		PhotoPage: {
-			screen: PhotoPage,
+		VideoPlayerTest: {
+			screen: VideoPlayerTest,
+		},
+
+		VideoTest: {
+			screen: VideoTest,
 		},
 		CacheImage: {
 			screen: CacheImage,

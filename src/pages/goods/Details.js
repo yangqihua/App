@@ -4,8 +4,18 @@
 
 import React, {Component} from 'react';
 import {
-	View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform,Dimensions,TouchableHighlight,TouchableWithoutFeedback
+	View,
+	Text,
+	StyleSheet,
+	TouchableOpacity,
+	Image,
+	ScrollView,
+	Platform,
+	Dimensions,
+	TouchableHighlight,
+	TouchableWithoutFeedback
 } from 'react-native';
+import VideoPlayer from '../../components/VideoPlayer';
 
 import * as themeColor from '../../utils/Theme';
 import Toast, {DURATION} from 'react-native-easy-toast'
@@ -15,6 +25,8 @@ import DetailsSwiper from './DetailsSwiper';
 
 let backImgWhite = require('../../images/back_white.png')
 let backImgGray = require('../../images/back_gray.png')
+
+import {base_public_url} from '../../utils/Constants'
 
 const windowWidth = Dimensions.get('window').width;
 const parallax_header_height = windowWidth;
@@ -30,17 +42,17 @@ class Details extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			backImg:backImgGray,
-			data:{img_urls:[],detail_desc_array:[]},
-			test:[],
+			backImg: backImgGray,
+			data: {img_urls: [], detail_desc_array: [], video_urls: []},
+			test: [],
 		};
 	}
 
 	componentDidMount() {
 		let params = {
-			url: 'goods/details?goods_id='+this.props.navigation.state.params.goods_id,
+			url: 'goods/details?goods_id=' + this.props.navigation.state.params.goods_id,
 			scb: (result) => {
-				console.log("result:",result)
+				console.log("result:", result)
 				this.setState({
 					data: result,
 				})
@@ -48,26 +60,25 @@ class Details extends Component {
 		};
 		HttpUtil.get(params)
 
-		setTimeout(()=>{
+		setTimeout(() => {
 			this.setState({
-				test:[1,2,3,4]
+				test: [1, 2, 3, 4]
 			})
-		},200)
+		}, 200)
 	}
 
 	goBack() {
 		this.props.navigation.goBack();
 	}
 
-	onPress(){
-		this.refs.toast.show('hello world!');
+	onPress() {
 	}
 
-	onChangeHeaderVisibility(visible){
-		if(visible){
-			this.setState({backImg:backImgGray})
-		}else{
-			this.setState({backImg:backImgWhite})
+	onChangeHeaderVisibility(visible) {
+		if (visible) {
+			this.setState({backImg: backImgGray})
+		} else {
+			this.setState({backImg: backImgWhite})
 		}
 	}
 
@@ -91,12 +102,55 @@ class Details extends Component {
 		return (
 			<View key="fixed-header" style={styles.fixedSection}>
 				<View>
-					<TouchableOpacity style={{paddingTop:16,paddingBottom:16,paddingLeft:12,}} onPress={()=>this.goBack()}>
+					<TouchableOpacity style={{paddingTop:16,paddingBottom:16,paddingLeft:12,}}
+					                  onPress={()=>this.goBack()}>
 						<Image style={{width: 16,height: 16}} source={this.state.backImg}/>
 					</TouchableOpacity>
 				</View>
 			</View>
 		)
+	}
+
+	loadVideoStart() {
+		this.refs.toast.show('loadVideoStart');
+	}
+
+	onVideoLoad() {
+		this.refs.toast.show('onVideoLoad');
+	}
+
+	onVideoProgress() {
+		this.refs.toast.show('onVideoProgress');
+	}
+
+	onVideoEnd() {
+		this.refs.toast.show('onVideoEnd');
+	}
+
+	videoError() {
+		this.refs.toast.show('videoError');
+	}
+
+
+	renderVideos(video_urls) {
+		return video_urls.map((item, index) => {
+			return (
+				<View key={index} style={{flex:1}}>
+					<Text
+						style={{lineHeight:28,fontSize:14,textAlign:'center',marginTop:12,marginBottom:3,color:themeColor.themeBlack}}>
+						{item.desc}
+					</Text>
+					<VideoPlayer
+						resizeMode='contain'
+						disableBack={ true }
+						disableFullscreen={ true }
+						disableVolume={ true }
+						source={{uri: base_public_url+item.url}}
+					    style={{width:windowWidth,height:300}}
+					/>
+				</View>
+			)
+		})
 	}
 
 	render() {
@@ -124,33 +178,38 @@ class Details extends Component {
 					renderFixedHeader={() => this.renderFixedHeader()}>
 
 					<ScrollView style={{marginTop:16}}>
-						<Text style={{lineHeight:28,fontSize:18,textAlign:'center',color:themeColor.themeBlack}}>{this.state.data.name}</Text>
-						<Text style={{lineHeight:28,fontSize:13,textAlign:'center',color:themeColor.themeHighGrayText}}>{this.state.data.goods_desc}</Text>
-						<Text style={{lineHeight:28,fontSize:20,textAlign:'center',color:themeColor.themeRed,marginTop:5}}>¥ {this.state.data.price}</Text>
+						<Text
+							style={{lineHeight:28,fontSize:18,textAlign:'center',color:themeColor.themeBlack}}>{this.state.data.name}</Text>
+						<Text
+							style={{lineHeight:28,fontSize:13,textAlign:'center',color:themeColor.themeHighGrayText}}>{this.state.data.goods_desc}</Text>
+						<Text
+							style={{lineHeight:28,fontSize:20,textAlign:'center',color:themeColor.themeRed,marginTop:5}}>¥ {this.state.data.price}</Text>
 						<View style={{flexDirection: 'row',justifyContent:'center',marginTop:10,marginLeft:4 }}>
 							<View style={{flexDirection: 'row',paddingRight:20 }}>
-								<Image style={{width:14, height:14, marginRight: 5}} source={require('../../images/like_empty.png')} />
-								<Text style={{color: themeColor.themeGray,fontSize:14,paddingBottom:5,}}>{this.state.data.collection_num}</Text>
+								<Image style={{width:14, height:14, marginRight: 5}}
+								       source={require('../../images/like_empty.png')}/>
+								<Text
+									style={{color: themeColor.themeGray,fontSize:14,paddingBottom:5,}}>{this.state.data.collection_num}</Text>
 							</View>
 							<View style={{flexDirection: 'row',paddingLeft:20 }}>
-								<Image style={{width:14, height:14, marginRight: 5}} source={require('../../images/share.png')} />
-								<Text style={{color: themeColor.themeGray,fontSize:14,paddingBottom:5}}>{this.state.data.share_num}</Text>
+								<Image style={{width:14, height:14, marginRight: 5}}
+								       source={require('../../images/share.png')}/>
+								<Text
+									style={{color: themeColor.themeGray,fontSize:14,paddingBottom:5}}>{this.state.data.share_num}</Text>
 							</View>
 						</View>
 						{
-							this.state.data.detail_desc_array.map((item,index)=>{
+							this.state.data.detail_desc_array.map((item, index) => {
 								return (
-									<Text style={{fontSize:14,color:themeColor.themeHighGrayText,lineHeight:20,padding:12}} key={index}>{item}</Text>
+									<Text
+										style={{fontSize:14,color:themeColor.themeHighGrayText,lineHeight:20,padding:12}}
+										key={index}>{item}</Text>
 								)
 							})
 						}
 
 						{
-							this.state.data.video_urls.map((item,index)=>{
-								return (
-									<Text style={{lineHeight:28,fontSize:14,textAlign:'center',marginTop:12,color:themeColor.themeBlack}} key={index}>{item.desc}</Text>
-								)
-							})
+							this.state.data.video_urls&&this.renderVideos(this.state.data.video_urls)
 						}
 
 
