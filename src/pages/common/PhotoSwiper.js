@@ -9,7 +9,7 @@ import {
 	TouchableWithoutFeedback,
 	View,
 	ScrollView,
-	ActivityIndicator,PixelRatio
+	ActivityIndicator, PixelRatio
 } from 'react-native';
 
 import Swiper from '../../components/Swiper';
@@ -17,16 +17,26 @@ import PhotoView from 'react-native-photo-view';
 
 import {base_public_url} from '../../utils/Constants'
 const {width, height} = Dimensions.get('window');
-const img_slide_thumbnail = '?imageView2/1/w/' + PixelRatio.get()*width;
+const img_slide_thumbnail = '?imageView2/1/w/' + PixelRatio.get() * width;
 
 class PhotoSwiper extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			shouldLoad: false,
+		}
 	}
 
 	viewerPressHandle() {
 		this.props.viewerPressHandle();
+	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			this.setState({shouldLoad: true});
+			console.log("PhotoSwiper componentDidMount");
+		}, 200);
 	}
 
 	renderPagination(index, total, context) {
@@ -60,13 +70,16 @@ class PhotoSwiper extends React.Component {
 		return this.props.imgList.map((item, index) => {
 			return (
 				<View style={styles.slide} key={item['url']}>
-					<PhotoView
-						source={{uri: base_public_url + item['url']+img_slide_thumbnail}}
-						onTap={this.viewerPressHandle.bind(this)}
-						onViewTap={this.viewerPressHandle.bind(this)}
-						style={styles.photo}
-						loadingIndicatorSource={require('../../images/fail_img.png')}
-					/>
+					{
+						this.state.shouldLoad &&
+						<PhotoView
+							loadingIndicatorSource={() => <ActivityIndicator />}
+							source={{uri: base_public_url + item['url']+img_slide_thumbnail}}
+							onTap={this.viewerPressHandle.bind(this)}
+							onViewTap={this.viewerPressHandle.bind(this)}
+							style={styles.photo}
+						/>
+					}
 				</View>
 			)
 		})
@@ -98,7 +111,7 @@ let styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	photo: {
-		width,height:width,
+		width, height: width,
 		flex: 1,
 	},
 });

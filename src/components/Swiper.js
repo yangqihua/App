@@ -16,8 +16,7 @@ import {
 	TouchableOpacity,
 	ViewPagerAndroid,
 	Platform,
-	ActivityIndicator,
-	PanResponder,
+	ActivityIndicator
 } from 'react-native'
 
 /**
@@ -99,6 +98,8 @@ const styles = {
 		fontFamily: 'Arial'
 	}
 }
+
+const window = Dimensions.get('window')
 
 // missing `module.exports = exports['default'];` with babel6
 // export default React.createClass({
@@ -197,24 +198,6 @@ export default class extends Component {
 	autoplayTimer = null
 	loopJumpTimer = null
 
-	componentWillMount () {
-		if (Platform.OS !== 'ios') {
-			const shouldSetResponder = (evt, gestureState) => this.props.horizontal
-			&& (Math.abs(gestureState.vx) > Math.abs(gestureState.vy));
-			this._panResponder = PanResponder.create({
-				onStartShouldSetPanResponder: shouldSetResponder,
-				onStartShouldSetPanResponderCapture: shouldSetResponder,
-				onMoveShouldSetPanResponder: shouldSetResponder,
-				onMoveShouldSetPanResponderCapture: shouldSetResponder,
-				onPanResponderRelease: () => false,
-				onPanResponderTerminate: () => false,
-				// blocking nativeResponder makes it hard to scroll ViewPagerAndroid in a ScrollView
-				// I don't know how it works since I know little about java, but it did work in my case
-				onShouldBlockNativeResponder: () => false,
-			})
-		}
-	}
-
 	componentWillReceiveProps (nextProps) {
 		if (!nextProps.autoplay && this.autoplayTimer) clearTimeout(this.autoplayTimer)
 		this.setState(this.initState(nextProps, this.props.index !== nextProps.index))
@@ -235,67 +218,84 @@ export default class extends Component {
 	}
 
 	initState (props, updateIndex = false) {
-		// set the current state
-		const state = this.state || { width: 0, height: 0, offset: { x: 0, y: 0 } }
-
+		// new state
 		const initState = {
 			autoplayEnd: false,
 			loopJump: false,
-			offset: {}
+			offset: {x: 0, y: 0}
 		}
+
+		//-----------------------------------------------------
+		// set total (new number of children)
+		//-----------------------------------------------------
 
 		initState.total = props.children ? props.children.length || 1 : 0
 
-		if (state.total === initState.total && !updateIndex) {
+		//-----------------------------------------------------
+		// set index (its values are 0..total-1)
+		//-----------------------------------------------------
+
+		if (this.state && this.state.total === initState.total && !updateIndex) {
 			// retain the index
-			initState.index = state.index
+			initState.index = this.state.index
 		} else {
-			initState.index = initState.total > 1 ? Math.min(props.index, initState.total - 1) : 0
+			// correct index in case some children were removed
+			initState.index = initState.total > 1
+				? Math.min(props.index, initState.total - 1)
+				: 0
 		}
 
-		// Default: horizontal
-		const { width, height } = Dimensions.get('window')
+		//-----------------------------------------------------
+		// set direction
+		//-----------------------------------------------------
 
 		initState.dir = props.horizontal === false ? 'y' : 'x'
 
+		//-----------------------------------------------------
+		// set width
+		//-----------------------------------------------------
+
 		if (props.width) {
 			initState.width = props.width
-		} else if (this.state && this.state.width){
+		} else if (this.state && this.state.width) {
 			initState.width = this.state.width
 		} else {
-			initState.width = width;
+			initState.width = window.width
 		}
+
+		//-----------------------------------------------------
+		// set height
+		//-----------------------------------------------------
 
 		if (props.height) {
 			initState.height = props.height
-		} else if (this.state && this.state.height){
+		} else if (this.state && this.state.height) {
 			initState.height = this.state.height
 		} else {
-			initState.height = height;
+			initState.height = window.height
 		}
 
-		// since defaultProps of index is 0
-		// when nextProps didnt contain index, initial offset would be { 0, 0 }
-		initState.offset[initState.dir] = initState.dir === 'y'
-			? height * initState.index
-			: width * initState.index;
+		//-----------------------------------------------------
+		// set offset
+		//-----------------------------------------------------
 
-		// fix render last page first when loop = true
-		if (props.loop) {
-			initState.offset[initState.dir] = initState.dir === 'y'
-				? height * (initState.index + 1)
-				: width * (initState.index + 1);
+		const loopIndex = this.props.loop
+			? initState.index + 1
+			: initState.index
+
+		if (initState.dir === 'x') {
+			initState.offset.x = initState.width * loopIndex
+		} else {
+			initState.offset.y = initState.height * loopIndex
 		}
 
-		if (state.total === initState.total && !props.updateIndex) {
-			// retain the offset
-			initState.offset = this.internals.offset;
-		}
+		//-----------------------------------------------------
+		// set internals
+		//-----------------------------------------------------
 
 		this.internals = {
 			...this.internals,
-			// update offset
-			offset: { ...initState.offset },
+			offset: initState.offset,
 			isScrolling: false
 		};
 
@@ -308,25 +308,19 @@ export default class extends Component {
 	}
 
 	onLayout = (event) => {
-		const { width, height } = event.nativeEvent.layout
-		// if I have only one image as placeholder, and replace it when other images loaded,
-		// updateIndex would never be triggered until Carousel re-render;
-		// because initial offset is undefined when children.length === 1
-		// offset[dir] minus internals.offset[dir] would be NaN,
-		// function updateIndex would return immediately.
-		const offset = this.internals.offset
-		const state = { width, height }
+		const {width, height} = event.nativeEvent.layout
+		const offset = this.internals.offset = {}
+		const state = {width, height}
 
-		// seems unnecessary
-		// if (this.state.total > 1) {
-		//   let setup = this.state.index
-		//   if (this.props.loop) {
-		//     setup++
-		//   }
-		//   offset[this.state.dir] = this.state.dir === 'y'
-		//     ? height * setup
-		//     : width * setup
-		// }
+		if (this.state.total > 1) {
+			let setup = this.state.index
+			if (this.props.loop) {
+				setup++
+			}
+			offset[this.state.dir] = this.state.dir === 'y'
+				? height * setup
+				: width * setup
+		}
 
 		// only update the offset in state if needed, updating offset while swiping
 		// causes some bad jumping / stuttering
@@ -437,10 +431,9 @@ export default class extends Component {
 	 * @param  {string} dir    'x' || 'y'
 	 */
 	updateIndex = (offset, dir, cb) => {
-		const state = this.state
-		let index = state.index
+		let index = this.state.index
 		const diff = offset[dir] - this.internals.offset[dir]
-		const step = dir === 'x' ? state.width : state.height
+		const step = dir === 'x' ? this.state.width : this.state.height
 		let loopJump = false
 
 		// Do nothing if offset no change.
@@ -453,10 +446,10 @@ export default class extends Component {
 
 		if (this.props.loop) {
 			if (index <= -1) {
-				index = state.total - 1
-				offset[dir] = step * state.total
+				index = this.state.total - 1
+				offset[dir] = step * this.state.total
 				loopJump = true
-			} else if (index >= state.total) {
+			} else if (index >= this.state.total) {
 				index = 0
 				offset[dir] = step
 				loopJump = true
@@ -476,8 +469,16 @@ export default class extends Component {
 			// Setting the offset to the same thing will not do anything,
 			// so we increment it by 1 then immediately set it to what it should be,
 			// after render.
-			newState.offset = offset
-			this.setState(newState, cb)
+			if (offset[dir] === this.internals.offset[dir]) {
+				newState.offset = { x: 0, y: 0 }
+				newState.offset[dir] = offset[dir] + 1
+				this.setState(newState, () => {
+					this.setState({ offset: offset }, cb)
+				})
+			} else {
+				newState.offset = offset
+				this.setState(newState, cb)
+			}
 		} else {
 			this.setState(newState, cb)
 		}
@@ -678,9 +679,7 @@ export default class extends Component {
 				              initialPage={this.props.loop ? this.state.index + 1 : this.state.index}
 				              onPageSelected={this.onScrollEnd}
 				              key={pages.length}
-				              style={[styles.wrapperAndroid, this.props.style]}
-				{...this._panResponder.panHandlers}
-			>
+				              style={[styles.wrapperAndroid, this.props.style]}>
 				{pages}
 			</ViewPagerAndroid>
 		)
