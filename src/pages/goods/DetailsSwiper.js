@@ -13,7 +13,7 @@ import {
 	TouchableOpacity, TouchableWithoutFeedback
 } from 'react-native';
 
-import Swiper from 'react-native-swiper';
+import Swiper from '../../components/Swiper';
 import {CachedImage} from "react-native-cached-image";
 import {base_public_url} from '../../utils/Constants'
 const windowWidth = Dimensions.get('window').width;

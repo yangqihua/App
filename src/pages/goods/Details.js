@@ -12,7 +12,6 @@ import Toast, {DURATION} from 'react-native-easy-toast'
 import ParallaxScrollView from '../../components/ParallaxScrollView';
 import HttpUtil from '../../utils/HTTPUtil'
 import DetailsSwiper from './DetailsSwiper';
-import Swiper from 'react-native-swiper';
 
 let backImgWhite = require('../../images/back_white.png')
 let backImgGray = require('../../images/back_gray.png')

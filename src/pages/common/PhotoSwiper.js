@@ -12,7 +12,7 @@ import {
 	ActivityIndicator,PixelRatio
 } from 'react-native';
 
-import Swiper from 'react-native-swiper';
+import Swiper from '../../components/Swiper';
 import PhotoView from 'react-native-photo-view';
 
 import {base_public_url} from '../../utils/Constants'
