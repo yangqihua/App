@@ -15,7 +15,7 @@ import {
 	TouchableHighlight,
 	TouchableWithoutFeedback
 } from 'react-native';
-import VideoPlayer from '../../components/Player';
+import VideoPlayer from '../../components/VideoPlayer';
 
 import * as themeColor from '../../utils/Theme';
 import Toast, {DURATION} from 'react-native-easy-toast'

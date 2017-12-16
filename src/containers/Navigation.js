@@ -49,6 +49,9 @@ const AppNavigation = StackNavigator(
 			screen: Blank,
 			navigationOptions: ({navigation}) => StackOptions({navigation})
 		},
+		PhotoPage: {
+			screen: PhotoPage,
+		},
 		Webv: {
 			screen: Webv,
 		},

@@ -26,6 +26,7 @@ class DetailsSwiper extends React.Component {
 	}
 
 	thumbPressHandle(index) {
+		console.log("thumbPressHandle")
 		this.props.navigation.navigate('PhotoPage',{
 			showIndex:index,
 			imgList:this.props.img_urls,

@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import VideoPlayer from '../components/Player';
+import VideoPlayer from '../components/VideoPlayer';
 
 export default class VideoTest extends Component {
 	constructor() {
