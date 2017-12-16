@@ -15,7 +15,9 @@ export const RefreshState = {
 }
 
 const DEBUG = false
-const log = (text: string) => {DEBUG && console.log(text)}
+const log = (text: string) => {
+	DEBUG && console.log(text)
+}
 
 const footerRefreshingText = '数据加载中...'
 const footerFailureText = '网络不给力，点击重新加载'
@@ -42,7 +44,7 @@ class RefreshListView extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {}
-		this.rowRefs =[]
+		this.rowRefs = []
 		this._onViewableItemsChanged = this._onViewableItemsChanged.bind(this)
 	}
 
@@ -94,7 +96,7 @@ class RefreshListView extends PureComponent {
 		return (refreshState == RefreshState.Idle)
 	}
 
-	_addRowRefs(ref, data){
+	_addRowRefs(ref, data) {
 		this.rowRefs[data.index] = {
 			ref: ref,
 			item: data.item,
@@ -102,7 +104,7 @@ class RefreshListView extends PureComponent {
 		}
 	}
 
-	_updateItem(index, visibility){
+	_updateItem(index, visibility) {
 		if (!this.rowRefs[index].ref) {
 			return false;
 		}
@@ -110,7 +112,7 @@ class RefreshListView extends PureComponent {
 		return visibility
 	}
 
-	_renderItem(data){
+	_renderItem(data) {
 		const view = this.props.renderItem(data)
 		return (
 			<FlatListItem
@@ -121,20 +123,61 @@ class RefreshListView extends PureComponent {
 		)
 	}
 
-	_onViewableItemsChanged (info: {
+	_getBoundaryItems(viewableItems, offset) {
+		let low, high;
+		let boundaryItems = []
+		if (viewableItems.length > 1) {
+			let list = this.props.data
+			let lowItemIndex = viewableItems[0]['index']
+			let highItemIndex = viewableItems[viewableItems.length - 1]['index']
+			// add low Boundary
+			if ((lowItemIndex - offset) > 0) {
+				low = lowItemIndex - offset;
+			} else {
+				low = 0;
+			}
+			// add high Boundary
+			if ((highItemIndex + offset) < this.rowRefs.length - 1) {
+				high = highItemIndex + offset;
+			} else {
+				high = this.rowRefs.length - 1;
+			}
+		}
+		return {low, high};
+	}
+
+	_onViewableItemsChanged(info: {
 		changed: Array<{
 			key: string,
 			isViewable: boolean,
 			item: any,
 			index: ?number,
 			section?: any,
+		}>,
+		viewableItems:Array<{
+			index: ?number,
+			item: any,
+			key?: any,
+			isViewable: boolean,
 		}>
+	}) {
+		let {low, high} = this._getBoundaryItems(info.viewableItems, 5);
+		// console.log("info.changed:",info.changed);
+		// console.log("info.viewableItems:", info.viewableItems);
+		// console.log("{low,high}:", {low, high});
+		// console.log("this.rowRefs:",this.rowRefs);
+		for (let i = 0; i < this.rowRefs.length; i++) {
+			if (i < low || i > high) {
+				this._updateItem(i, false);
+			} else {
+				this._updateItem(i, true);
+			}
+		}
+		// info.changed.map(item =>
+		// 	this._updateItem(item.index, item.isViewable)
+		// )
 	}
-	) {
-		info.changed.map(item =>
-			this._updateItem(item.index, item.isViewable)
-		)
-	}
+
 
 	render() {
 		log('[RefreshListView]  render')
@@ -161,7 +204,7 @@ class RefreshListView extends PureComponent {
 		let footerTextStyle = [styles.footerText, this.props.footerTextStyle]
 		switch (this.props.refreshState) {
 			case RefreshState.Idle:
-				footer = (<View style={footerContainerStyle} />)
+				footer = (<View style={footerContainerStyle}/>)
 				break
 			case RefreshState.Failure: {
 				footer = (
@@ -178,8 +221,8 @@ class RefreshListView extends PureComponent {
 			}
 			case RefreshState.FooterRefreshing: {
 				footer = (
-					<View style={footerContainerStyle} >
-						<ActivityIndicator size="small" color="#888888" />
+					<View style={footerContainerStyle}>
+						<ActivityIndicator size="small" color="#888888"/>
 						<Text style={[footerTextStyle, {marginLeft: 7}]}>{footerRefreshingText}</Text>
 					</View>
 				)
@@ -187,7 +230,7 @@ class RefreshListView extends PureComponent {
 			}
 			case RefreshState.NoMoreData: {
 				footer = (
-					<View style={footerContainerStyle} >
+					<View style={footerContainerStyle}>
 						<Text style={footerTextStyle}>{footerNoMoreDataText}</Text>
 					</View>
 				)

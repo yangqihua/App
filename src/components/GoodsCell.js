@@ -18,7 +18,11 @@ class HomeCell extends PureComponent {
 		return (
 			<TouchableWithoutFeedback key={item.key} onPress={()=>this.goDetails(item['id'])}>
 				<View style={[styles.itemContainer,item.key==0?styles.item1:styles.item2]}>
-					<CachedImage source={{uri: base_public_url+item.home_url.url+img_thumbnail}} style={styles.icon}/>
+					<CachedImage
+						activityIndicatorProps={{opacity:0}}
+						loadingIndicator={null}
+						source={{uri: base_public_url+item.home_url.url+img_thumbnail}}
+						style={styles.icon}/>
 
 					<View style={styles.textView}>
 						<Text style={styles.h1} numberOfLines={1}>{item.name}</Text>
