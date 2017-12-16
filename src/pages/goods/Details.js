@@ -31,7 +31,7 @@ class Details extends Component {
 		super(props);
 		this.state = {
 			backImg:backImgGray,
-			data:{img_urls:[]},
+			data:{img_urls:[],detail_desc_array:[]},
 			test:[],
 		};
 	}
@@ -123,13 +123,36 @@ class Details extends Component {
 
 					renderFixedHeader={() => this.renderFixedHeader()}>
 
-					<ScrollView>
-						{/*<DetailsSwiper img_urls={this.state.data.img_urls}/>*/}
-						{[12, 32, 123, 2, 4, 32, 432, 213, 123, 123, 2, 31, 23, 12, 3123, 123, 12, 5, 5, 345, 34, 5, 34, 53, 52, 35, 2352, 35, 23, 5, 23, 123, 12, 31, 23, 1].map((item, index) => {
-							return (
-								<Text style={{height:30}} key={index} onPress={()=>this.onPress()}>hello list {item}</Text>
-							)
-						})}
+					<ScrollView style={{marginTop:16}}>
+						<Text style={{lineHeight:28,fontSize:18,textAlign:'center',color:themeColor.themeBlack}}>{this.state.data.name}</Text>
+						<Text style={{lineHeight:28,fontSize:13,textAlign:'center',color:themeColor.themeHighGrayText}}>{this.state.data.goods_desc}</Text>
+						<Text style={{lineHeight:28,fontSize:20,textAlign:'center',color:themeColor.themeRed,marginTop:5}}>¥ {this.state.data.price}</Text>
+						<View style={{flexDirection: 'row',justifyContent:'center',marginTop:10,marginLeft:4 }}>
+							<View style={{flexDirection: 'row',paddingRight:20 }}>
+								<Image style={{width:14, height:14, marginRight: 5}} source={require('../../images/like_empty.png')} />
+								<Text style={{color: themeColor.themeGray,fontSize:14,paddingBottom:5,}}>{this.state.data.collection_num}</Text>
+							</View>
+							<View style={{flexDirection: 'row',paddingLeft:20 }}>
+								<Image style={{width:14, height:14, marginRight: 5}} source={require('../../images/share.png')} />
+								<Text style={{color: themeColor.themeGray,fontSize:14,paddingBottom:5}}>{this.state.data.share_num}</Text>
+							</View>
+						</View>
+						{
+							this.state.data.detail_desc_array.map((item,index)=>{
+								return (
+									<Text style={{fontSize:14,color:themeColor.themeHighGrayText,lineHeight:20,padding:12}} key={index}>{item}</Text>
+								)
+							})
+						}
+
+						{
+							this.state.data.video_urls.map((item,index)=>{
+								return (
+									<Text style={{lineHeight:28,fontSize:14,textAlign:'center',marginTop:12,color:themeColor.themeBlack}} key={index}>{item.desc}</Text>
+								)
+							})
+						}
+
 
 					</ScrollView>
 				</ParallaxScrollView>

@@ -45,7 +45,7 @@ const IPropTypes = {
 
 class ParallaxScrollView extends Component {
 	static defaultProps = {
-		backgroundScrollSpeed: 5,
+		backgroundScrollSpeed: 10000,
 		stickyHeaderBackgroundColor: '#000',
 		backgroundColor: '#fff',
 		contentBackgroundColor: '#fff',

@@ -34,7 +34,7 @@ class Home extends React.Component {
 				tabBarBackgroundColor={color.themeWhite}
 				tabBarTextStyle={{fontSize:12}}
 				ref="scrollableTabView"
-				renderTabBar={() => <DefaultTabBar style={{height: 38,borderWidth:1,borderColor:color.themeHeightLine,paddingTop:8}}/>}
+				renderTabBar={() => <DefaultTabBar style={{height: 38,borderWidth:1,borderColor:color.themeHighLine,paddingTop:8}}/>}
 			>
 				{this.state.category.map(cate => {
 					return <TabContent navigation={this.props.navigation} key={cate.category} category={cate.category} tabLabel={cate.name}/>
