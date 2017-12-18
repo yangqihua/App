@@ -48,18 +48,21 @@ class TopCell extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
-		margin: 12,
+		marginTop: 12,
+		marginRight: 12,
+		marginLeft: 12,
 		borderWidth: 1,
 		borderTopRightRadius: 3,
 		borderTopLeftRadius: 3,
-		borderColor: color.themeBorder,
+		borderColor: color.themeHighLine,
+		backgroundColor:color.themeWhite
 	},
 	icon: {
 		width: windowWidth - 26,
 		height: (windowWidth - 26) * 3 / 5,
 		borderTopRightRadius: 3,
 		borderTopLeftRadius: 3,
-		borderColor: color.themeBorder,
+		borderColor: color.themeHighLine,
 	},
 	bottomContainer: {
 		flex: 1,

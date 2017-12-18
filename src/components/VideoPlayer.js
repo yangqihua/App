@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
 		marginLeft: 0,
 		marginRight: 0,
 		paddingHorizontal: 0,
-		marginTop: -3,
-		height: 1,
+		marginTop: -1,
+		height: 5,
 	},
 	seekBarProgress: {
 		height: 1,
