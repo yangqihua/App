@@ -5,7 +5,7 @@ import React, {PureComponent} from 'react'
 import {View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native'
 
 import FlatListItem from './FlatListItem';
-import * as ThemeColor from '../../utils/Theme';
+import * as themeColor from '../../utils/Theme';
 
 export const RefreshState = {
 	Idle: 0,
@@ -223,7 +223,7 @@ class RefreshListView extends PureComponent {
 			case RefreshState.FooterRefreshing: {
 				footer = (
 					<View style={footerContainerStyle}>
-						<ActivityIndicator size="small" color="#888888"/>
+						<ActivityIndicator size="small" color={themeColor.themeGrayText}/>
 						<Text style={[footerTextStyle, {marginLeft: 7}]}>{footerRefreshingText}</Text>
 					</View>
 				)
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
 	},
 	footerText: {
 		fontSize: 14,
-		color: ThemeColor.themeGrayText
+		color: themeColor.themeGrayText
 	}
 })
 
