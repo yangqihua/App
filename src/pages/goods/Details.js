@@ -56,6 +56,7 @@ class Details extends Component {
 			url: 'goods/details?goods_id=' + this.props.navigation.state.params.goods_id,
 			scb: (result) => {
 				result.video_urls = result.video_urls?result.video_urls:[];
+				result.detail_desc_array = result.detail_desc_array?result.detail_desc_array:[];
 				this.setState({
 					data: result,
 					loadingVisible:false
@@ -65,6 +66,7 @@ class Details extends Component {
 				})
 			}
 		};
+		console.log("params",params);
 		HttpUtil.get(params)
 	}
 

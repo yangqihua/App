@@ -30,7 +30,7 @@ import My from '../pages/my/My';
 
 import Home from '../pages/home/home/Home';
 import Forum from '../pages/home/Forum';
-import Top from '../pages/home/Top';
+import Top from '../pages/home/top/Top';
 import Me from '../pages/home/Me';
 
 import * as font from '../constants/WHCFont';
@@ -106,11 +106,11 @@ const Tabbar = TabNavigator({
 		},
 	}
 }, {
-	initialRouteName: 'Home',
+	initialRouteName: 'Top',
 	tabBarPosition: 'bottom',
 	swipeEnabled: false,
 	animationEnabled: false,
-	lazy: false,
+	lazy: true,
 	backBehavior: 'none', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
 	tabBarOptions: {
 		// ios or android

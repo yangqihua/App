@@ -29,6 +29,10 @@ class Me extends Component {
 		// }),
 	}
 
+	componentDidMount() {
+		this.getCacheInfo();
+	}
+
 	getCacheInfo() {
 		ImageCacheManager().getCacheInfo()
 			.then(({size, files}) => {
@@ -55,7 +59,6 @@ class Me extends Component {
 	}
 
 	render() {
-		this.getCacheInfo();
 		return (
 			<View style={{flex:1}}>
 				<ScrollView style={styles.scrollView}>

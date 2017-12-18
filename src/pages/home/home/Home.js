@@ -64,7 +64,6 @@ export default Home;
 class TabContent extends Component {
 	static defaultProps = {
 		category: 0,
-		navigation:null,
 	}
 
 	constructor(props) {
