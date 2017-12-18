@@ -161,7 +161,7 @@ class RefreshListView extends PureComponent {
 			isViewable: boolean,
 		}>
 	}) {
-		let {low, high} = this._getBoundaryItems(info.viewableItems, 5);
+		let {low, high} = this._getBoundaryItems(info.viewableItems, 1);
 		// console.log("info.changed:",info.changed);
 		// console.log("info.viewableItems:", info.viewableItems);
 		// console.log("{low,high}:", {low, high});

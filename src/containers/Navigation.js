@@ -75,13 +75,14 @@ const AppNavigation = StackNavigator(
 			headerBackTitle: '返回',  // 左上角返回键文字
 			headerStyle: {
 				height: 48,
-				backgroundColor: color.themeRed,
+				backgroundColor: color.themeWhite,
 				elevation: 0,
-				borderBottomWidth: 0
+				borderBottomWidth: 0.5,
+				borderBottomColor:color.themeHighLine
 			},
 			headerTitleStyle: {
 				fontSize: 18,
-				color: 'mintcream',
+				color: color.themeRed,
 				alignSelf: 'center'
 			},
 			// headerRight:{},

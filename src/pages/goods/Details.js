@@ -16,6 +16,7 @@ import {
 	TouchableWithoutFeedback
 } from 'react-native';
 import VideoPlayer from '../../components/VideoPlayer';
+import Loading from '../../components/Loading';
 
 import * as themeColor from '../../utils/Theme';
 import Toast, {DURATION} from 'react-native-easy-toast'
@@ -42,29 +43,24 @@ class Details extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loadingVisible:false,
 			backImg: backImgGray,
 			data: {img_urls: [], detail_desc_array: [], video_urls: []},
-			test: [],
 		};
 	}
 
 	componentDidMount() {
+		this.setState({loadingVisible:true});
 		let params = {
 			url: 'goods/details?goods_id=' + this.props.navigation.state.params.goods_id,
 			scb: (result) => {
-				console.log("result:", result)
+				this.setState({loadingVisible:false});
 				this.setState({
 					data: result,
 				})
 			}
 		};
 		HttpUtil.get(params)
-
-		setTimeout(() => {
-			this.setState({
-				test: [1, 2, 3, 4]
-			})
-		}, 200)
 	}
 
 	goBack() {
@@ -102,33 +98,13 @@ class Details extends Component {
 		return (
 			<View key="fixed-header" style={styles.fixedSection}>
 				<View>
-					<TouchableOpacity style={{paddingTop:16,paddingBottom:16,paddingLeft:12,}}
+					<TouchableOpacity style={{paddingTop:16,paddingBottom:16,paddingLeft:12,paddingRight:12}}
 					                  onPress={()=>this.goBack()}>
 						<Image style={{width: 16,height: 16}} source={this.state.backImg}/>
 					</TouchableOpacity>
 				</View>
 			</View>
 		)
-	}
-
-	loadVideoStart() {
-		this.refs.toast.show('loadVideoStart');
-	}
-
-	onVideoLoad() {
-		this.refs.toast.show('onVideoLoad');
-	}
-
-	onVideoProgress() {
-		this.refs.toast.show('onVideoProgress');
-	}
-
-	onVideoEnd() {
-		this.refs.toast.show('onVideoEnd');
-	}
-
-	videoError() {
-		this.refs.toast.show('videoError');
 	}
 
 	likeAction() {
@@ -214,7 +190,7 @@ class Details extends Component {
 								return (
 									<Text
 										style={{fontSize:14,color:themeColor.themeHighGrayText,lineHeight:20,padding:12}}
-										key={index}>{item}</Text>
+										key={index}>        {item}</Text>
 								)
 							})
 						}
@@ -246,10 +222,11 @@ class Details extends Component {
 					</View>
 					<TouchableWithoutFeedback onPress={this.buyAction.bind(this)}>
 						<View style={{flex:1,backgroundColor:themeColor.themeRed,alignItems:'center',justifyContent:'center'}}>
-							<Text style={{fontSize:18,color:themeColor.themeWhite}}>立即购买</Text>
+							<Text style={{fontSize:16,color:themeColor.themeWhite}}>去淘宝购买</Text>
 						</View>
 					</TouchableWithoutFeedback>
 				</View>
+				<Loading visible={this.state.loadingVisible} cancelable={true} />
 				<Toast ref="toast"/>
 			</View>
 		);

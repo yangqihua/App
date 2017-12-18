@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import {Text, StyleSheet, ScrollView, View} from 'react-native';
+import {Text, StyleSheet, ScrollView, View,StatusBar} from 'react-native';
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view';
 
 import GoodsCell from '../../../components/GoodsCell'
@@ -79,6 +79,7 @@ class TabContent extends Component {
 	render() {
 		return (
 			<View>
+				<StatusBar backgroundColor={'black'}/>
 				<RefreshListView
 					ListHeaderComponent={this.props.category==0?<HomeSwiper/>:null}
 					data={this.state.data}
