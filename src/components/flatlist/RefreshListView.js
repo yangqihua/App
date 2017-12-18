@@ -5,6 +5,7 @@ import React, {PureComponent} from 'react'
 import {View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native'
 
 import FlatListItem from './FlatListItem';
+import * as ThemeColor from '../../utils/Theme';
 
 export const RefreshState = {
 	Idle: 0,
@@ -21,7 +22,7 @@ const log = (text: string) => {
 
 const footerRefreshingText = '数据加载中...'
 const footerFailureText = '网络不给力，点击重新加载'
-const footerNoMoreDataText = '已加载全部数据'
+const footerNoMoreDataText = '---   我也是有底线的   ---'
 
 type Props = {
 	refreshState: number,
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
 	},
 	footerText: {
 		fontSize: 14,
-		color: '#555555'
+		color: ThemeColor.themeGrayText
 	}
 })
 

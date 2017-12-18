@@ -78,7 +78,7 @@ class TabContent extends Component {
 
 	render() {
 		return (
-			<View>
+			<View style={{backgroundColor:'white'}}>
 				<StatusBar backgroundColor={'black'}/>
 				<RefreshListView
 					ListHeaderComponent={this.props.category==0?<HomeSwiper/>:null}
