@@ -46,6 +46,7 @@ class Details extends Component {
 			loadingVisible:false,
 			backImg: backImgGray,
 			data: {img_urls: [], detail_desc_array: [], video_urls: []},
+			videoInfo:{height:260,width:windowWidth,thumbnail:backgroudUrl},
 		};
 	}
 
@@ -54,13 +55,31 @@ class Details extends Component {
 		let params = {
 			url: 'goods/details?goods_id=' + this.props.navigation.state.params.goods_id,
 			scb: (result) => {
-				this.setState({loadingVisible:false});
 				this.setState({
 					data: result,
+					loadingVisible:false
+				})
+				this.state.data.video_urls.map(item=>{
+					this.getVideoInfo(item.url)
 				})
 			}
 		};
 		HttpUtil.get(params)
+	}
+
+	getVideoInfo(videoUrl){
+		let params = {
+			url: base_public_url+videoUrl+'?avinfo',
+			scb: (result) => {
+				let width = result['streams'][0]['width'];
+				let height = result['streams'][0]['height'];
+				let videoInfo = {height:height,width:width,thumbnail:base_public_url+videoUrl+'?vframe/jpg/offset/6/w/'+windowWidth};
+				this.setState({
+					videoInfo: videoInfo,
+				})
+			}
+		};
+		HttpUtil.publicGet(params)
 	}
 
 	goBack() {
@@ -130,10 +149,10 @@ class Details extends Component {
 					</Text>
 					<VideoPlayer
 						endWithThumbnail
-						thumbnail={{ uri: 'http://ozg6xzz9f.bkt.clouddn.com/detail_pics/75/72cb84f07bcc77779c8561cf19caf46c.jpg' }}
 						video={{uri: base_public_url+item.url}}
 						videoWidth={windowWidth}
-						videoHeight={260}
+						videoHeight={windowWidth/this.state.videoInfo.width*this.state.videoInfo.height}
+						thumbnail={{ uri: this.state.videoInfo.thumbnail }}
 					/>
 				</View>
 			)

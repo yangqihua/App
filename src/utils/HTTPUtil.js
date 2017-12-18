@@ -72,31 +72,40 @@ class HTTPUtil {
 		})
 	}
 
-	static get({url,params={},scb,ecb}){
-		url = base_api_url+url;
-		HTTPUtil.promiseGet(url,params,null).then((json) => {
+	static get({url, params = {}, scb, ecb}) {
+		url = base_api_url + url;
+		HTTPUtil.promiseGet(url, params, null).then((json) => {
 			//处理 请求success
 			if (json.code === 200) {
-				scb&&scb(json.data)
-			}else{  // 自定义异常
-				ecb&&ecb(json);
+				scb && scb(json.data)
+			} else {  // 自定义异常
+				ecb && ecb(json);
 			}
-		},(err)=>{
-			ecb&&ecb(err);
+		}, (err) => {
+			ecb && ecb(err);
 		})
 	}
 
-	static post({url,requestData={},scb,ecb}){
-		url = base_api_url+url;
-		HTTPUtil.promisePost(url,requestData,null).then((json) => {
+	static publicGet({url, params = {}, scb, ecb}) {
+		HTTPUtil.promiseGet(url, params, null).then((json) => {
+			//处理 请求success
+			scb && scb(json)
+		}, (err) => {
+			ecb && ecb(err);
+		})
+	}
+
+	static post({url, requestData = {}, scb, ecb}) {
+		url = base_api_url + url;
+		HTTPUtil.promisePost(url, requestData, null).then((json) => {
 			//处理 请求success
 			if (json.code === 200) {
-				scb&&scb(json.data)
-			}else{  // 自定义异常
-				ecb&&ecb(json);
+				scb && scb(json.data)
+			} else {  // 自定义异常
+				ecb && ecb(json);
 			}
-		},(err)=>{
-			ecb&&ecb(err);
+		}, (err) => {
+			ecb && ecb(err);
 		})
 	}
 }
