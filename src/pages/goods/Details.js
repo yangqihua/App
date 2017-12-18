@@ -55,6 +55,7 @@ class Details extends Component {
 		let params = {
 			url: 'goods/details?goods_id=' + this.props.navigation.state.params.goods_id,
 			scb: (result) => {
+				result.video_urls = result.video_urls?result.video_urls:[];
 				this.setState({
 					data: result,
 					loadingVisible:false
