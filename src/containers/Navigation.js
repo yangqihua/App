@@ -17,6 +17,7 @@ import PhotoPage from '../pages/common/PhotoPage';
 import VideoPlayerTest from '../test/VideoPlayerTest'
 import VideoTest from '../test/VideoTest'
 import CacheImage from '../test/CacheImage'
+import DropDownTest from '../test/DropDownTest'
 const StackOptions = ({navigation}) => {
 	let {goBack,headerRight} = navigation;
 	const headerLeft = (
@@ -57,6 +58,10 @@ const AppNavigation = StackNavigator(
 		},
 
 		// test page
+		DropDownTest: {
+			screen: DropDownTest,
+		},
+
 		VideoPlayerTest: {
 			screen: VideoPlayerTest,
 		},

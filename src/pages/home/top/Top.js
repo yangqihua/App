@@ -3,8 +3,9 @@
  */
 
 import React from 'react';
-import {Text,StyleSheet, ScrollView,View} from 'react-native';
+import {Text, StyleSheet, ScrollView, View} from 'react-native';
 import TopCell from './TopCell';
+import DropdownMenu from '../../../components/Popover';
 
 import RefreshListView, {RefreshState} from '../../../components/flatlist/RefreshListView'
 import * as color from '../../../utils/Theme';
@@ -13,15 +14,29 @@ import HttpUtil from '../../../utils/HTTPUtil'
 
 class Top extends React.Component {
 
-	static navigationOptions = ({navigation,screenProps}) => ({
+	static navigationOptions = ({navigation, screenProps}) => ({
 		title: "榜单",
+		headerRight: (
+			<View style={{flex: 1,marginRight:12}}>
+				<DropdownMenu style={{flex: 1}}
+				              arrowImg={require('../../../images/dropdown/dropdown_arrow.png')}      //set the arrow icon, default is a triangle
+				              checkImage={require('../../../images/dropdown/menu_check.png')}    //set the icon of the selected item, default is a check mark
+				              bgColor={"white"}
+				              tintColor={color.themeBlack}
+				              data={[['综合','本周']]}
+				              maxHeight={200}                            // the max height of the menu
+				              handler={(selection, row) => console.log("row")}>
+
+				</DropdownMenu>
+			</View>
+		)
 	})
 
 	constructor(props) {
 		super(props);
 		this.queryParams = {page: 1, limit: 10};
 		this.state = {
-			category:1,  // 1 为综合榜单，2 为按周排行
+			category: 1,  // 1 为综合榜单，2 为按周排行
 			data: [],
 			refreshState: RefreshState.Idle
 		};
@@ -100,7 +115,7 @@ class Top extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor:color.themeGrayBackground
+		backgroundColor: color.themeGrayBackground
 	},
 });
 
