@@ -3369,6 +3369,10 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-actionsheet@^2.3.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/react-native-actionsheet/download/react-native-actionsheet-2.3.0.tgz#a9552a356dc5939829062353804d5e5609e8f969"
+
 react-native-cached-image@^1.4.3:
   version "1.4.3"
   resolved "http://registry.npm.taobao.org/react-native-cached-image/download/react-native-cached-image-1.4.3.tgz#0942e2cd078284a1f0438de8dfe17f2b36a89752"
