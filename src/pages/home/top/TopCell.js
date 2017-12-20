@@ -23,6 +23,12 @@ class TopCell extends React.Component {
 		})
 	}
 
+	// layout(e){
+	// 	let {height} = e.layout
+	// 	console.log("height:",height)
+	// 	console.log("windowWidth:",windowWidth)
+	// }
+
 	render() {
 		return (
 			<TouchableWithoutFeedback onPress={()=>this.goDetails(this.props.item['goods_id'])}>
@@ -59,7 +65,7 @@ const styles = StyleSheet.create({
 	},
 	icon: {
 		width: windowWidth - 26,
-		height: (windowWidth - 26) * 3 / 5,
+		height: parseInt((windowWidth - 26) * 3 / 5),
 		borderTopRightRadius: 3,
 		borderTopLeftRadius: 3,
 		borderColor: color.themeHighLine,
@@ -73,6 +79,7 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 	},
 	textView: {
+		height:60,
 		marginTop: 15,
 		marginBottom: 6,
 		marginRight: 2,

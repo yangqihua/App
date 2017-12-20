@@ -66,7 +66,6 @@ class Details extends Component {
 				})
 			}
 		};
-		console.log("params",params);
 		HttpUtil.get(params)
 	}
 
