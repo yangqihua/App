@@ -5,28 +5,16 @@
 import React from 'react';
 import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Image, Dimensions} from 'react-native';
 import TopCell from './TopCell';
-import DropDown from './DropDown';
-import Toast, {DURATION} from 'react-native-easy-toast'
+import HeaderView from './HeaderView';
 
 import RefreshListView, {RefreshState} from '../../../components/flatlist/RefreshListView'
 import * as color from '../../../utils/Theme';
-import ActionSheet from 'react-native-actionsheet';
-import Utils from '../../../utils/Utils';
 import HttpUtil from '../../../utils/HTTPUtil'
-
-const windowWidth = Dimensions.get('window').width;
 
 class Top extends React.Component {
 
 	static navigationOptions = ({navigation, screenProps}) => ({
 		title: "榜单",
-		headerLeft: (<View/>),
-		headerRight: (
-			<TouchableOpacity style={{height:'100%',paddingLeft:20,paddingRight:12 ,justifyContent:'center'}}
-			                  onPress={navigation.state.params?navigation.state.params.showActionSheet:null}>
-				<Image style={{width:18,height:18}} source={require('../../../images/my_switch_icon.png')}/>
-			</TouchableOpacity>
-		)
 	})
 
 	constructor(props) {
@@ -40,30 +28,7 @@ class Top extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.navigation.setParams({
-			showActionSheet: this.showActionSheet.bind(this)
-		})
 		this.onFooterRefresh()
-	}
-
-	showActionSheet() {
-		this.ActionSheet.show()
-	}
-
-	handlePress(index) {
-		if (index == 0) {
-			return;
-		}
-		this.setState({
-			category: index,
-		})
-		this._flatList.scrollToIndex({animated: true, index: 0, viewPosition: 0});
-		setInterval(() => {
-			this.onHeaderRefresh();
-
-		}, 2000)
-		// this.refs.toast.show('this.cellHeight='+this.cellHeight);
-		// this.refs.toast.show('index='+index);
 	}
 
 	onHeaderRefresh = () => {
@@ -108,20 +73,20 @@ class Top extends React.Component {
 	}
 
 	keyExtractor = (item: any, index: number) => {
-		return item.goods_id
+		return index
 	}
 
 	renderCell = (info) => {
 		return <TopCell item={info.item} navigation={this.props.navigation}/>
 	}
 
-	getItemLayout(data, index) {
-		let oneHeight = 292
-		return {
-			length: oneHeight,
-			offset: oneHeight * index + 12,
-			index
-		}
+	selectCategory(index) {
+		this.setState({
+			category: index,
+		},()=>{
+			this.onHeaderRefresh();
+		})
+
 	}
 
 
@@ -129,7 +94,7 @@ class Top extends React.Component {
 		return (
 			<View style={styles.container}>
 				<RefreshListView
-					listRef={(flatList)=>this._flatList = flatList}
+					ListHeaderComponent={<HeaderView selectedIndex={this.state.category} onSelected={this.selectCategory.bind(this)}/>}
 					data={this.state.data}
 					keyExtractor={this.keyExtractor}
 					renderItem={this.renderCell.bind(this)}
@@ -137,15 +102,6 @@ class Top extends React.Component {
 					onHeaderRefresh={this.onHeaderRefresh}
 					onFooterRefresh={this.onFooterRefresh}
 				/>
-				<ActionSheet
-					ref={o => this.ActionSheet = o}
-					title={'请选择'}
-					options={[ '取消','综合榜单', '每周榜单']}
-					cancelButtonIndex={0}
-					destructiveButtonIndex={this.state.category}
-					onPress={this.handlePress.bind(this)}
-				/>
-				<Toast ref="toast" position='top'/>
 			</View>
 		)
 	}

@@ -179,8 +179,6 @@ class RefreshListView extends PureComponent {
 		// )
 	}
 
-
-
 	render() {
 		log('[RefreshListView]  render')
 
