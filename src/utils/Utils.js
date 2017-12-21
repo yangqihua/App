@@ -40,5 +40,38 @@ export default class Utils {
         return false;
     }
 
+	static formatDate(ts) {
+		let currentTs = new Date().getTime();
+		let diffTs = currentTs - ts;
+
+		//year
+		let years = diffTs / (365 * 24 * 3600 * 1000);
+
+		if(years >= 1.0) {
+			return Math.ceil(years) + '年前';
+		}
+
+		//days
+		let days = diffTs / (24 * 3600 * 1000);
+		if(days >= 1.0) {
+			return Math.ceil(days) + '天前';
+		}
+
+		//hours
+		let hours = diffTs / (3600 * 1000);
+		if(hours >= 1.0) {
+			return Math.ceil(hours) + '小时前';
+		}
+
+		//minutes
+		let minutes = diffTs / (60 * 1000);
+		if(minutes >= 1.0 ) {
+			return Math.ceil(minutes) + '分钟前';
+		}
+
+		return '刚刚';
+
+	}
+
 
 }
