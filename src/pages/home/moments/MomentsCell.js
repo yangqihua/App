@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
 		lineHeight: 18,
 	},
 
-
 	momentsContent: {
 		marginLeft: userAvatarInterval,
 		marginTop: -17,
